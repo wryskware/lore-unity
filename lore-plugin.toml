@@ -20,13 +20,10 @@ grammar = "xml.wasm"
 # The tag is the format, not the grammar. It becomes `Chunk::language` and the
 # first word of the embedding header, where "uxml" says Unity UI Toolkit layout
 # and "xml" says almost nothing — and "uxml" is the word a developer searching
-# for one would actually type. The contract sketch's example used the grammar's
-# name; this is a deliberate departure.
-#
-# Because `symbol` defaults to the language tag, the tag no longer names the
-# artifact's `tree_sitter_<symbol>` export, so it is given explicitly.
+# for one would actually type. The wasm entry point (`symbol`) is unrelated:
+# it defaults from the grammar file's stem, so `xml.wasm` resolves to
+# `tree_sitter_xml` with nothing declared here.
 language_tag = "uxml"
-symbol = "xml"
 
 # An `element` is the only structural unit UXML has, and it nests, so it is a
 # container rather than a symbol: a big `<ui:VisualElement>` yields a header
@@ -77,9 +74,9 @@ name_kinds = ["Name"]
 extensions = ["uss"]
 strategy = "grammar"
 grammar = "css.wasm"
-# Same reasoning as UXML above: the format, not the grammar.
+# Same reasoning as UXML above: the format, not the grammar; the entry point
+# defaults from `css.wasm`.
 language_tag = "uss"
-symbol = "css"
 
 # A rule is atomic: splitting one into "selector header" plus per-declaration
 # members would separate `color:` from the selector that gives it meaning. So
