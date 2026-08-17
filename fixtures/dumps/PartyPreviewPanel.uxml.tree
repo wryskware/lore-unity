@@ -1,0 +1,301 @@
+# Named-node tree, produced by the authoring harness (tree-sitter 0.26 with the
+# `wasm` feature, this repo's own .wasm grammar). Reference for verifying that
+# the node kinds lore-plugin.toml names actually occur.
+#
+# <plugin-root>/fixtures/PartyPreviewPanel.uxml
+# grammar xml.wasm (abi 14, is_wasm true), 3258 bytes, has_error false
+#
+# named-node tree: kind [field=] [start..end] text
+
+document [0..3258] <?xml version="1.0" encoding="utf-8"?>\n<!-- PartyPreviewPanel: …
+  prolog [0..1001] <?xml version="1.0" encoding="utf-8"?>\n<!-- PartyPreviewPanel: …
+    XMLDecl [0..38] <?xml version="1.0" encoding="utf-8"?>
+      VersionNum [15..18] 1.0
+      EncName [30..35] utf-8
+    Comment [39..1000] <!-- PartyPreviewPanel: mandatory pre-battle party view + minima…
+  element field=root [1001..3257] <ui:UXML xmlns:ui="UnityEngine.UIElements">\n    <ui:Template na…
+    STag [1001..1044] <ui:UXML xmlns:ui="UnityEngine.UIElements">
+      Name [1002..1009] ui:UXML
+      Attribute [1010..1043] xmlns:ui="UnityEngine.UIElements"
+        Name [1010..1018] xmlns:ui
+        AttValue [1019..1043] "UnityEngine.UIElements"
+    content [1044..3247] \n    <ui:Template name="AffinityBadge" src="AffinityBadge.uxml"…
+      CharData [1044..1049] \n    
+      element [1049..1109] <ui:Template name="AffinityBadge" src="AffinityBadge.uxml"/>
+        EmptyElemTag [1049..1109] <ui:Template name="AffinityBadge" src="AffinityBadge.uxml"/>
+          Name [1050..1061] ui:Template
+          Attribute [1062..1082] name="AffinityBadge"
+            Name [1062..1066] name
+            AttValue [1067..1082] "AffinityBadge"
+          Attribute [1083..1107] src="AffinityBadge.uxml"
+            Name [1083..1086] src
+            AttValue [1087..1107] "AffinityBadge.uxml"
+      CharData [1109..1114] \n    
+      element [1114..1142] <Style src="EchoTheme.uss"/>
+        EmptyElemTag [1114..1142] <Style src="EchoTheme.uss"/>
+          Name [1115..1120] Style
+          Attribute [1121..1140] src="EchoTheme.uss"
+            Name [1121..1124] src
+            AttValue [1125..1140] "EchoTheme.uss"
+      CharData [1142..1147] \n    
+      element [1147..1183] <Style src="PartyPreviewPanel.uss"/>
+        EmptyElemTag [1147..1183] <Style src="PartyPreviewPanel.uss"/>
+          Name [1148..1153] Style
+          Attribute [1154..1181] src="PartyPreviewPanel.uss"
+            Name [1154..1157] src
+            AttValue [1158..1181] "PartyPreviewPanel.uss"
+      CharData [1183..1189] \n\n    
+      element [1189..3246] <ui:VisualElement name="party-panel" class="party lex-panel">\n …
+        STag [1189..1250] <ui:VisualElement name="party-panel" class="party lex-panel">
+          Name [1190..1206] ui:VisualElement
+          Attribute [1207..1225] name="party-panel"
+            Name [1207..1211] name
+            AttValue [1212..1225] "party-panel"
+          Attribute [1226..1249] class="party lex-panel"
+            Name [1226..1231] class
+            AttValue [1232..1249] "party lex-panel"
+        content [1250..3227] \n        <ui:Label class="lex-title" text="Assemble Your Echoes…
+          CharData [1250..1259] \n        
+          element [1259..1316] <ui:Label class="lex-title" text="Assemble Your Echoes"/>
+            EmptyElemTag [1259..1316] <ui:Label class="lex-title" text="Assemble Your Echoes"/>
+              Name [1260..1268] ui:Label
+              Attribute [1269..1286] class="lex-title"
+                Name [1269..1274] class
+                AttValue [1275..1286] "lex-title"
+              Attribute [1287..1314] text="Assemble Your Echoes"
+                Name [1287..1291] text
+                AttValue [1292..1314] "Assemble Your Echoes"
+          CharData [1316..1325] \n        
+          element [1325..1462] <ui:Label class="lex-label--dim party__hint"\n                  …
+            EmptyElemTag [1325..1462] <ui:Label class="lex-label--dim party__hint"\n                  …
+              Name [1326..1334] ui:Label
+              Attribute [1335..1369] class="lex-label--dim party__hint"
+                Name [1335..1340] class
+                AttValue [1341..1369] "lex-label--dim party__hint"
+              Attribute [1388..1460] text="Socket this room's words. The words choose what answers th…
+                Name [1388..1392] text
+                AttValue [1393..1460] "Socket this room's words. The words choose what answers the cal…
+          CharData [1462..1472] \n\n        
+          element [1472..2935] <ui:ScrollView name="party-cards" class="party__cards">\n\n     …
+            STag [1472..1527] <ui:ScrollView name="party-cards" class="party__cards">
+              Name [1473..1486] ui:ScrollView
+              Attribute [1487..1505] name="party-cards"
+                Name [1487..1491] name
+                AttValue [1492..1505] "party-cards"
+              Attribute [1506..1526] class="party__cards"
+                Name [1506..1511] class
+                AttValue [1512..1526] "party__cards"
+            content [1527..2919] \n\n            <!-- EXAMPLE unit card (clone per party member; …
+              CharData [1527..1541] \n\n            
+              Comment [1541..1608] <!-- EXAMPLE unit card (clone per party member; safe to delete) …
+              CharData [1608..1621] \n            
+              element [1621..2909] <ui:VisualElement name="unit-card-template" class="party__card">…
+                STag [1621..1685] <ui:VisualElement name="unit-card-template" class="party__card">
+                  Name [1622..1638] ui:VisualElement
+                  Attribute [1639..1664] name="unit-card-template"
+                    Name [1639..1643] name
+                    AttValue [1644..1664] "unit-card-template"
+                  Attribute [1665..1684] class="party__card"
+                    Name [1665..1670] class
+                    AttValue [1671..1684] "party__card"
+                content [1685..2890] \n                <ui:VisualElement class="party__card-header">\…
+                  CharData [1685..1702] \n                
+                  element [1702..2258] <ui:VisualElement class="party__card-header">\n                 …
+                    STag [1702..1747] <ui:VisualElement class="party__card-header">
+                      Name [1703..1719] ui:VisualElement
+                      Attribute [1720..1746] class="party__card-header"
+                        Name [1720..1725] class
+                        AttValue [1726..1746] "party__card-header"
+                    content [1747..2239] \n                    <ui:VisualElement name="card-portrait" cla…
+                      CharData [1747..1768] \n                    
+                      element [1768..1829] <ui:VisualElement name="card-portrait" class="lex-portrait"/>
+                        EmptyElemTag [1768..1829] <ui:VisualElement name="card-portrait" class="lex-portrait"/>
+                          Name [1769..1785] ui:VisualElement
+                          Attribute [1786..1806] name="card-portrait"
+                            Name [1786..1790] name
+                            AttValue [1791..1806] "card-portrait"
+                          Attribute [1807..1827] class="lex-portrait"
+                            Name [1807..1812] class
+                            AttValue [1813..1827] "lex-portrait"
+                      CharData [1829..1850] \n                    
+                      element [1850..2141] <ui:VisualElement class="party__card-id">\n                     …
+                        STag [1850..1891] <ui:VisualElement class="party__card-id">
+                          Name [1851..1867] ui:VisualElement
+                          Attribute [1868..1890] class="party__card-id"
+                            Name [1868..1873] class
+                            AttValue [1874..1890] "party__card-id"
+                        content [1891..2122] \n                        <ui:Label name="card-name" class="part…
+                          CharData [1891..1916] \n                        
+                          element [1916..1984] <ui:Label name="card-name" class="party__card-name" text="Prowle…
+                            EmptyElemTag [1916..1984] <ui:Label name="card-name" class="party__card-name" text="Prowle…
+                              Name [1917..1925] ui:Label
+                              Attribute [1926..1942] name="card-name"
+                                Name [1926..1930] name
+                                AttValue [1931..1942] "card-name"
+                              Attribute [1943..1967] class="party__card-name"
+                                Name [1943..1948] class
+                                AttValue [1949..1967] "party__card-name"
+                              Attribute [1968..1982] text="Prowler"
+                                Name [1968..1972] text
+                                AttValue [1973..1982] "Prowler"
+                          CharData [1984..2009] \n                        
+                          element [2009..2101] <ui:Label name="card-stats" class="lex-label--dim" text="HP 18 ·…
+                            EmptyElemTag [2009..2101] <ui:Label name="card-stats" class="lex-label--dim" text="HP 18 ·…
+                              Name [2010..2018] ui:Label
+                              Attribute [2019..2036] name="card-stats"
+                                Name [2019..2023] name
+                                AttValue [2024..2036] "card-stats"
+                              Attribute [2037..2059] class="lex-label--dim"
+                                Name [2037..2042] class
+                                AttValue [2043..2059] "lex-label--dim"
+                              Attribute [2060..2099] text="HP 18 · ATK 6 · DEF 1 · SPD 6"
+                                Name [2060..2064] text
+                                AttValue [2065..2099] "HP 18 · ATK 6 · DEF 1 · SPD 6"
+                          CharData [2101..2122] \n                    
+                        ETag [2122..2141] </ui:VisualElement>
+                          Name [2124..2140] ui:VisualElement
+                      CharData [2141..2162] \n                    
+                      element [2162..2222] <ui:Instance name="card-affinity" template="AffinityBadge"/>
+                        EmptyElemTag [2162..2222] <ui:Instance name="card-affinity" template="AffinityBadge"/>
+                          Name [2163..2174] ui:Instance
+                          Attribute [2175..2195] name="card-affinity"
+                            Name [2175..2179] name
+                            AttValue [2180..2195] "card-affinity"
+                          Attribute [2196..2220] template="AffinityBadge"
+                            Name [2196..2204] template
+                            AttValue [2205..2220] "AffinityBadge"
+                      CharData [2222..2239] \n                
+                    ETag [2239..2258] </ui:VisualElement>
+                      Name [2241..2257] ui:VisualElement
+                  CharData [2258..2276] \n\n                
+                  element [2276..2877] <ui:VisualElement name="card-sockets" class="party__sockets">\n …
+                    STag [2276..2337] <ui:VisualElement name="card-sockets" class="party__sockets">
+                      Name [2277..2293] ui:VisualElement
+                      Attribute [2294..2313] name="card-sockets"
+                        Name [2294..2298] name
+                        AttValue [2299..2313] "card-sockets"
+                      Attribute [2314..2336] class="party__sockets"
+                        Name [2314..2319] class
+                        AttValue [2320..2336] "party__sockets"
+                    content [2337..2858] \n                    <!-- EXAMPLE socket row (clone per unlocke…
+                      CharData [2337..2358] \n                    
+                      Comment [2358..2413] <!-- EXAMPLE socket row (clone per unlocked socket) -->
+                      CharData [2413..2434] \n                    
+                      element [2434..2841] <ui:VisualElement name="socket-row-template" class="party__socke…
+                        STag [2434..2505] <ui:VisualElement name="socket-row-template" class="party__socke…
+                          Name [2435..2451] ui:VisualElement
+                          Attribute [2452..2478] name="socket-row-template"
+                            Name [2452..2456] name
+                            AttValue [2457..2478] "socket-row-template"
+                          Attribute [2479..2504] class="party__socket-row"
+                            Name [2479..2484] class
+                            AttValue [2485..2504] "party__socket-row"
+                        content [2505..2822] \n                        <ui:Label name="socket-slot-label" cla…
+                          CharData [2505..2530] \n                        
+                          element [2530..2607] <ui:Label name="socket-slot-label" class="party__socket-type" te…
+                            EmptyElemTag [2530..2607] <ui:Label name="socket-slot-label" class="party__socket-type" te…
+                              Name [2531..2539] ui:Label
+                              Attribute [2540..2564] name="socket-slot-label"
+                                Name [2540..2544] name
+                                AttValue [2545..2564] "socket-slot-label"
+                              Attribute [2565..2591] class="party__socket-type"
+                                Name [2565..2570] class
+                                AttValue [2571..2591] "party__socket-type"
+                              Attribute [2592..2605] text="ATTACK"
+                                Name [2592..2596] text
+                                AttValue [2597..2605] "ATTACK"
+                          CharData [2607..2632] \n                        
+                          element [2632..2697] <ui:DropdownField name="socket-word" class="party__socket-word"/…
+                            EmptyElemTag [2632..2697] <ui:DropdownField name="socket-word" class="party__socket-word"/…
+                              Name [2633..2649] ui:DropdownField
+                              Attribute [2650..2668] name="socket-word"
+                                Name [2650..2654] name
+                                AttValue [2655..2668] "socket-word"
+                              Attribute [2669..2695] class="party__socket-word"
+                                Name [2669..2674] class
+                                AttValue [2675..2695] "party__socket-word"
+                          CharData [2697..2722] \n                        
+                          element [2722..2801] <ui:Label name="socket-ability" class="party__socket-ability" te…
+                            EmptyElemTag [2722..2801] <ui:Label name="socket-ability" class="party__socket-ability" te…
+                              Name [2723..2731] ui:Label
+                              Attribute [2732..2753] name="socket-ability"
+                                Name [2732..2736] name
+                                AttValue [2737..2753] "socket-ability"
+                              Attribute [2754..2783] class="party__socket-ability"
+                                Name [2754..2759] class
+                                AttValue [2760..2783] "party__socket-ability"
+                              Attribute [2784..2799] text="→ Rend"
+                                Name [2784..2788] text
+                                AttValue [2789..2799] "→ Rend"
+                          CharData [2801..2822] \n                    
+                        ETag [2822..2841] </ui:VisualElement>
+                          Name [2824..2840] ui:VisualElement
+                      CharData [2841..2858] \n                
+                    ETag [2858..2877] </ui:VisualElement>
+                      Name [2860..2876] ui:VisualElement
+                  CharData [2877..2890] \n            
+                ETag [2890..2909] </ui:VisualElement>
+                  Name [2892..2908] ui:VisualElement
+              CharData [2909..2919] \n\n        
+            ETag [2919..2935] </ui:ScrollView>
+              Name [2921..2934] ui:ScrollView
+          CharData [2935..2945] \n\n        
+          element [2945..3222] <ui:VisualElement class="party__footer">\n            <ui:Button…
+            STag [2945..2985] <ui:VisualElement class="party__footer">
+              Name [2946..2962] ui:VisualElement
+              Attribute [2963..2984] class="party__footer"
+                Name [2963..2968] class
+                AttValue [2969..2984] "party__footer"
+            content [2985..3203] \n            <ui:Button name="party-reroll-button" class="lex-b…
+              CharData [2985..2998] \n            
+              element [2998..3091] <ui:Button name="party-reroll-button" class="lex-button lex-butt…
+                EmptyElemTag [2998..3091] <ui:Button name="party-reroll-button" class="lex-button lex-butt…
+                  Name [2999..3008] ui:Button
+                  Attribute [3009..3035] name="party-reroll-button"
+                    Name [3009..3013] name
+                    AttValue [3014..3035] "party-reroll-button"
+                  Attribute [3036..3072] class="lex-button lex-button--ghost"
+                    Name [3036..3041] class
+                    AttValue [3042..3072] "lex-button lex-button--ghost"
+                  Attribute [3073..3089] text="Auto-fill"
+                    Name [3073..3077] text
+                    AttValue [3078..3089] "Auto-fill"
+              CharData [3091..3104] \n            
+              element [3104..3194] <ui:Button name="party-fight-button" class="lex-button lex-butto…
+                EmptyElemTag [3104..3194] <ui:Button name="party-fight-button" class="lex-button lex-butto…
+                  Name [3105..3114] ui:Button
+                  Attribute [3115..3140] name="party-fight-button"
+                    Name [3115..3119] name
+                    AttValue [3120..3140] "party-fight-button"
+                  Attribute [3141..3179] class="lex-button lex-button--primary"
+                    Name [3141..3146] class
+                    AttValue [3147..3179] "lex-button lex-button--primary"
+                  Attribute [3180..3192] text="Fight"
+                    Name [3180..3184] text
+                    AttValue [3185..3192] "Fight"
+              CharData [3194..3203] \n        
+            ETag [3203..3222] </ui:VisualElement>
+              Name [3205..3221] ui:VisualElement
+          CharData [3222..3227] \n    
+        ETag [3227..3246] </ui:VisualElement>
+          Name [3229..3245] ui:VisualElement
+      CharData [3246..3247] \n
+    ETag [3247..3257] </ui:UXML>
+      Name [3249..3256] ui:UXML
+
+# kind histogram (named nodes)
+#      78  Name
+#      46  AttValue
+#      46  Attribute
+#      33  CharData
+#      23  element
+#      14  EmptyElemTag
+#       9  ETag
+#       9  STag
+#       9  content
+#       3  Comment
+#       1  EncName
+#       1  VersionNum
+#       1  XMLDecl
+#       1  document
+#       1  prolog
