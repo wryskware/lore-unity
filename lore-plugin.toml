@@ -37,7 +37,12 @@ containers = ["element"]
 
 # Where an element's children live. `element > content > element`; a
 # self-closing element has no `content` node at all, which core handles by
-# falling back to the element itself.
+# falling back to the element itself. One consequence: a self-closing element
+# larger than SMALL_CONTAINER_BYTES would be split into its `EmptyElemTag`,
+# which is not a mapped kind, and so would land as a `statements` chunk without
+# its symbol path. Nothing in Lexomancy's 29 layouts comes close — the largest
+# self-closing element is under 700 bytes — so this is recorded rather than
+# worked around.
 bodies = ["content"]
 
 # Comments ride with the element they document.
