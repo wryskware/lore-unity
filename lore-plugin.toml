@@ -1,0 +1,141 @@
+# lore-unity — Unity file formats for Lore's declarative chunker contract.
+#
+# Data, not code. Lore's own walker and windower do all the chunking; every
+# array below is a node-kind vocabulary handed to the walker in
+# crates/lore/src/chunk/code/mod.rs. Kind strings were derived by dumping the
+# real grammars over the fixtures in `fixtures/` (see `fixtures/dumps/`), not
+# guessed from grammar documentation.
+
+[plugin]
+name = "unity"
+
+# ---------------------------------------------------------------------------
+# UXML — UI Toolkit layouts, parsed with tree-sitter-xml.
+# ---------------------------------------------------------------------------
+[[chunker]]
+extensions = ["uxml"]
+strategy = "grammar"
+grammar = "xml.wasm"
+language_tag = "xml"
+# `symbol` is left at its default: the artifact exports `tree_sitter_xml`.
+
+# An `element` is the only structural unit UXML has, and it nests, so it is a
+# container rather than a symbol: a big `<ui:VisualElement>` yields a header
+# chunk (its tag and attributes) plus one chunk per child, while anything at or
+# below core's SMALL_CONTAINER_BYTES stays whole. As a symbol instead, the root
+# `<ui:UXML>` would be a single chunk covering the entire file.
+containers = ["element"]
+
+# Where an element's children live. `element > content > element`; a
+# self-closing element has no `content` node at all, which core handles by
+# falling back to the element itself.
+bodies = ["content"]
+
+# Comments ride with the element they document.
+#
+# `CharData` is here for a reason the engine's toy fixture could not show: in
+# real XML the whitespace between a comment and the element it describes is its
+# own `CharData` node, so `attachments = ["Comment"]` alone never fires —
+# core's attach-leading walk stops at the first non-attachment sibling. With
+# `CharData` attachable the chain `Comment, CharData, element` collapses onto
+# the element. Absorbing whitespace is a no-op (core trims chunk spans), and
+# absorbing inline text folds it into the element that follows it, which is
+# where it belongs.
+attachments = ["Comment", "CharData"]
+
+# `element` carries no tree-sitter `name` field, so naming falls to the
+# depth-2 descendant search: `element > STag > Name` for an open tag and
+# `element > EmptyElemTag > Name` for a self-closing one — both are `Name`.
+# This is what makes a chunk's symbol path read `ui:UXML.ui:VisualElement`
+# rather than `element.element`.
+name_kinds = ["Name"]
+
+# Deliberately empty: `path_only`, `symbols`, `wrappers`, `trailing_scope`.
+# `prolog` (the `<?xml …?>` declaration plus any file-header comment) is left
+# unmapped on purpose — it is not a declaration, and core's filler rule keeps
+# it as a `statements` chunk with exact spans, which is the right answer for a
+# file-header comment block.
+
+# ---------------------------------------------------------------------------
+# USS — UI Toolkit stylesheets, parsed with tree-sitter-css.
+# ---------------------------------------------------------------------------
+[[chunker]]
+extensions = ["uss"]
+strategy = "grammar"
+grammar = "css.wasm"
+language_tag = "css"
+
+# A rule is atomic: splitting one into "selector header" plus per-declaration
+# members would separate `color:` from the selector that gives it meaning. So
+# `rule_set` is a symbol, not a container, and a rule larger than core's
+# MAX_CHUNK_BYTES is line-windowed by core rather than structurally split.
+#
+# `keyframes_statement` is a symbol for the same reason. Unity's USS has no
+# animations today; the kind is verified to exist in this grammar and costs a
+# string.
+symbols = ["rule_set", "keyframes_statement"]
+
+# `@media` genuinely nests rule sets, so it is a container: its inner rules
+# keep their own chunks and gain the query as a path segment. Unity 6 added
+# USS media queries; Lexomancy's 25 stylesheets use none yet.
+containers = ["media_statement"]
+bodies = ["block"]
+
+# The CSS grammar emits no whitespace nodes, so a comment is the immediately
+# preceding sibling of the rule it documents and attaches without help.
+attachments = ["comment"]
+
+# A rule's "name" is its selector text. `rule_set > selectors` is a direct
+# child, so the depth-2 search finds it and a chunk's symbol path reads
+# `.lex-card--active` instead of `rule_set`. Note that core collapses
+# whitespace inside a name, so a descendant selector `.a .b` is recorded as
+# `.a.b` — searchable, but not a faithful selector spelling.
+# `parenthesized_query` names an `@media` block, `keyframes_name` an
+# `@keyframes` one. First matching *child* wins, and each of the three kinds
+# is the first named child of exactly one of the three node kinds above, so
+# they cannot cross-match.
+name_kinds = ["selectors", "parenthesized_query", "keyframes_name"]
+
+# `@import` is left unmapped: core's own convention is that imports and using
+# directives are filler, and USS imports are file-header material.
+
+# ---------------------------------------------------------------------------
+# Serialized Unity YAML — scenes, prefabs, and assets.
+# ---------------------------------------------------------------------------
+[[chunker]]
+extensions = ["unity", "prefab", "asset"]
+strategy = "windows"
+language_tag = "yaml"
+
+# Measured against Lexomancy (570 serialized files, `Library/` and `obj/`
+# excluded): this cap keeps 555 of them, and every one of the 15 it drops is a
+# generated blob — TextMesh Pro font SDF atlases, baked lexicon tables, an
+# embedding bake. The largest authored files that survive are the ~170 KB
+# ConceptsV1 card definitions, which carry real prose. Core's own ceiling is
+# 2 MiB, which would admit a 20 MB glyph table; a plugin may only tighten, and
+# this is the tightening that matters. A tighter 128 KB cap was rejected: it
+# would drop 117 authored ConceptsV1 assets.
+max_file_bytes = 262144
+
+# `window_lines` and `overlap_lines` are left at core's 80/10. Unity YAML is
+# verbose and low in signal density, so shorter windows would multiply the
+# embedding cost without sharpening anything, and core's per-window byte
+# ceiling already bounds the result.
+
+# ---------------------------------------------------------------------------
+# ShaderLab — `.shader`.
+# ---------------------------------------------------------------------------
+# No tree-sitter grammar for ShaderLab exists, so there is nothing to parse
+# with. This entry is still worth having over core's unknown-text fallback for
+# one reason: it sets `language_tag`, which becomes the first word of the
+# embedding header and the value of `Chunk::language`, so a shader window is
+# retrievable as a shader instead of as anonymous text. The windowing itself is
+# byte-identical to the fallback.
+#
+# The HLSL inside a `.shader` block is not chunked as HLSL, and `.hlsl` /
+# `.cginc` are not claimed at all — tree-sitter-hlsl publishes no `.wasm`
+# release asset, so that is future work rather than v1 scope.
+[[chunker]]
+extensions = ["shader"]
+strategy = "windows"
+language_tag = "shaderlab"
