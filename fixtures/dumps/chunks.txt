@@ -8,7 +8,7 @@
 
 ======== <plugin-root>/fixtures/BattleScreen.uxml ========
 # loaded xml.wasm as tree_sitter_xml (abi 14)
-language_tag=xml | 6484 bytes -> 19 chunks
+language_tag=uxml | 6484 bytes -> 19 chunks
   [     0..228   ]   228B  element          ui:UXML
   [   234..1332  ]  1098B  group            ui:UXML.ui:Template
   [  1338..1415  ]    77B  element          ui:UXML.ui:VisualElement
@@ -30,7 +30,7 @@ language_tag=xml | 6484 bytes -> 19 chunks
   [  6185..6445  ]   260B  element          ui:UXML.ui:VisualElement.ui:VisualElement
 
 ======== <plugin-root>/fixtures/Lexinomicon.uxml ========
-language_tag=xml | 14162 bytes -> 39 chunks
+language_tag=uxml | 14162 bytes -> 39 chunks
   [     0..228   ]   228B  element          ui:UXML
   [   233..393   ]   160B  element          ui:UXML.Style
   [   398..510   ]   112B  element          ui:UXML.ui:VisualElement
@@ -72,7 +72,7 @@ language_tag=xml | 14162 bytes -> 39 chunks
   [ 13930..13990 ]    60B  group            ui:UXML.ui:VisualElement.ui:VisualElement.ui:VisualElement.ui:VisualElement.ui:VisualElement.ui:VisualElement
 
 ======== <plugin-root>/fixtures/PartyPreviewPanel.uxml ========
-language_tag=xml | 3258 bytes -> 10 chunks
+language_tag=uxml | 3258 bytes -> 10 chunks
   [     0..1000  ]  1000B  statements       #s0
   [  1001..1044  ]    43B  element          ui:UXML
   [  1049..1183  ]   134B  group            ui:UXML.ui:Template
@@ -85,14 +85,14 @@ language_tag=xml | 3258 bytes -> 10 chunks
   [  2945..3222  ]   277B  element          ui:UXML.ui:VisualElement.ui:VisualElement
 
 ======== <plugin-root>/fixtures/UnitFrame.uxml ========
-language_tag=xml | 3478 bytes -> 4 chunks
+language_tag=uxml | 3478 bytes -> 4 chunks
   [     0..231   ]   231B  element          ui:UXML
   [   236..791   ]   555B  group            ui:UXML.ui:Template
   [   796..2955  ]  2159B  element          ui:UXML.ui:Instance
   [  2960..3466  ]   506B  element          ui:UXML.ui:VisualElement
 
 ======== <plugin-root>/fixtures/WordCard.uxml ========
-language_tag=xml | 1404 bytes -> 4 chunks
+language_tag=uxml | 1404 bytes -> 4 chunks
   [     0..228   ]   228B  element          ui:UXML
   [   234..380   ]   146B  element          ui:UXML.Style
   [   386..697   ]   311B  element          ui:UXML.ui:VisualElement
@@ -100,7 +100,7 @@ language_tag=xml | 1404 bytes -> 4 chunks
 
 ======== <plugin-root>/fixtures/BattleScreen.uss ========
 # loaded css.wasm as tree_sitter_css (abi 15)
-language_tag=css | 44977 bytes -> 105 chunks
+language_tag=uss | 44977 bytes -> 105 chunks
   [     0..204   ]   204B  rule_set         .battlePage
   [   208..538   ]   330B  group            .topRegion
   [   542..1149  ]   607B  rule_set         .playerColumn
@@ -208,7 +208,7 @@ language_tag=css | 44977 bytes -> 105 chunks
   [ 44727..44975 ]   248B  rule_set         .composerFocusRow__projection
 
 ======== <plugin-root>/fixtures/EchoTheme.uss ========
-language_tag=css | 8100 bytes -> 14 chunks
+language_tag=uss | 8100 bytes -> 14 chunks
   [     0..454   ]   454B  statements       #s0
   [   456..2593  ]  2137B  rule_set         :root
   [  2595..2956  ]   361B  rule_set         .lex-panel
@@ -225,7 +225,7 @@ language_tag=css | 8100 bytes -> 14 chunks
   [  8017..8099  ]    82B  rule_set         .lex-hidden
 
 ======== <plugin-root>/fixtures/HudComponents.uss ========
-language_tag=css | 10700 bytes -> 31 chunks
+language_tag=uss | 10700 bytes -> 31 chunks
   [     0..799   ]   799B  rule_set         .panelButton
   [   803..1290  ]   487B  rule_set         .panelButton
   [  1294..1804  ]   510B  rule_set         .panelButton:hover
@@ -259,7 +259,7 @@ language_tag=css | 10700 bytes -> 31 chunks
   [ 10267..10698 ]   431B  group            .trigChip--echo.trigChip__label
 
 ======== <plugin-root>/fixtures/WordCard.uss ========
-language_tag=css | 485 bytes -> 3 chunks
+language_tag=uss | 485 bytes -> 3 chunks
   [     0..10    ]    10B  rule_set         :root
   [    14..235   ]   221B  rule_set         .body
   [   239..483   ]   244B  rule_set         .word

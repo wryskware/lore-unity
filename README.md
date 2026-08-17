@@ -12,8 +12,8 @@ embedding headers, or set authority metadata, because it never emits anything.
 
 | Extension | Strategy | Shape |
 |---|---|---|
-| `.uxml` | XML grammar | one chunk per element, symbol path `ui:UXML.ui:VisualElement.ui:Label` |
-| `.uss` | CSS grammar | one chunk per rule, symbol path is the selector (`.lex-card--active`) |
+| `.uxml` | XML grammar | `language = uxml`, one chunk per element, symbol path `ui:UXML.ui:VisualElement.ui:Label` |
+| `.uss` | CSS grammar | `language = uss`, one chunk per rule, symbol path is the selector (`.lex-card--active`) |
 | `.unity` `.prefab` `.asset` | line windows | `language = yaml`, files over 256 KB skipped |
 | `.shader` | line windows | `language = shaderlab` |
 
@@ -84,6 +84,12 @@ Two things the engine's own toy fixture did not exercise:
 - **Self-closing elements use `EmptyElemTag`, not `STag`.** Both put the tag
   name in a `Name` child at the same depth, so `name_kinds = ["Name"]` covers
   both, but the `bodies = ["content"]` node exists only on the paired-tag form.
+
+The `language_tag` is the format (`uxml`, `uss`), not the grammar (`xml`,
+`css`), because it is the first word of the embedding header and the word a
+developer searching for a Unity layout would type. Since `symbol` defaults to
+the language tag and the artifacts export `tree_sitter_xml` / `tree_sitter_css`,
+both chunkers set `symbol` explicitly.
 
 Known limits, both benign:
 
