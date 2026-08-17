@@ -1,0 +1,116 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Lexinomicon/lexinomicon.uss?fileID=7433441132597879392&amp;guid=b3a172f5804a21145be7098960b98eb4&amp;type=3#lexinomicon"/>
+    <ui:VisualElement name="lexinomicon" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.5); display: none;">
+        <ui:VisualElement picking-mode="Ignore" name="clickableOuterSpace" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;">
+            <ui:VisualElement name="space" class="side-space" style="left: 0;"/>
+            <ui:VisualElement name="space" class="side-space" style="right: 0;"/>
+            <ui:VisualElement name="space" class="top-space" style="flex-grow: 1; position: absolute; top: 0; height: 80px; width: 100%;"/>
+            <ui:VisualElement name="space" class="top-space" style="flex-grow: 1; position: absolute; top: auto; height: 64px; width: 100%; bottom: 0;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="tabs" picking-mode="Ignore" style="flex-grow: 1; position: absolute; height: 420px; width: 180px; border-left-width: 12px; border-top-width: 12px; border-bottom-width: 8px; border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-left-color: rgb(156, 152, 168); border-right-color: rgb(156, 152, 168); border-top-color: rgb(156, 152, 168); border-bottom-color: rgb(156, 152, 168); background-color: rgb(202, 178, 150); left: 80px; top: 360px;">
+            <ui:VisualElement name="wordsTabButton" class="side-tab-button" style="flex-grow: 1; translate: -20px 0;">
+                <ui:Label text="W"/>
+                <ui:VisualElement name="pip1" class="pip" style="margin-bottom: 0; margin-left: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="echoesTabButton" class="side-tab-button" style="flex-grow: 1;">
+                <ui:Label text="E" style="flex-grow: 1;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="forgeTabButton" class="side-tab-button" style="flex-grow: 1; flex-direction: row;">
+                <ui:Label text="F" style="align-self: stretch; flex-grow: 1;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="background" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row; position: absolute; width: 100%; height: 100%;">
+            <ui:VisualElement name="left" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Lexinomicon/lexomancy_00043_.png?fileID=-5216680106945704001&amp;guid=623595d319521c34582605a28a9c07e2&amp;type=3#lexomancy_00043__0&quot;); -unity-slice-scale: 0.75px; margin-left: 200px;"/>
+            <ui:VisualElement name="right" picking-mode="Ignore" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Lexinomicon/lexomancy_00043_.png?fileID=355334263&amp;guid=623595d319521c34582605a28a9c07e2&amp;type=3#lexomancy_00043__1&quot;); -unity-slice-scale: 0.75px; margin-right: 200px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="container" picking-mode="Ignore" style="flex-grow: 1; margin-top: 145px; margin-right: 300px; margin-bottom: 145px; margin-left: 300px; flex-direction: row;">
+            <ui:VisualElement name="leftPage" style="flex-grow: 0; width: 50%;">
+                <ui:VisualElement name="viewMode" style="flex-grow: 1; padding-top: 18px;">
+                    <ui:Label text="Lexinomicon - Index" name="title" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/CCNearMyth%20Fables.otf?fileID=12800000&amp;guid=792551dd83449de45a1e228b7d785a8b&amp;type=3#CCNearMyth Fables&quot;); font-size: 48px; margin-bottom: 20px; margin-top: 16px;"/>
+                    <ui:VisualElement name="viewOptions" style="flex-grow: 0; justify-content: flex-start; align-self: stretch; display: none;">
+                        <ui:RadioButtonGroup label="Mode:" class="mode-label mode-input" style="align-items: flex-end; justify-content: flex-start; width: 500px; align-self: stretch; margin-left: 82px;">
+                            <ui:RadioButton label="List" name="list" value="true" style="align-items: stretch;"/>
+                            <ui:RadioButton label="Grid" name="grid"/>
+                        </ui:RadioButtonGroup>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="searchBar" style="flex-grow: 0; margin-left: 80px; margin-right: 80px;">
+                        <ui:TextField label="Filter:" placeholder-text="search for cards" name="search" class="search-bar"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="modeContainer" style="flex-grow: 1;">
+                        <ui:Foldout text="Spell Archetypes:" name="archetypes" value="false" class="category-fanout" style="margin-left: 50px;">
+                            <ui:Toggle label="Attack" name="Attack" class="category-toggle"/>
+                            <ui:Toggle label="Defense" name="Defense" class="category-toggle"/>
+                            <ui:Toggle label="Buff" name="Buff" class="category-toggle"/>
+                            <ui:Toggle label="Debuff" name="Debuff" class="category-toggle"/>
+                            <ui:Toggle label="Summon" name="Summon" class="category-toggle"/>
+                            <ui:Toggle label="Utility" name="Utility" class="category-toggle"/>
+                            <ui:Toggle label="Item" name="Item" value="false" class="category-toggle"/>
+                        </ui:Foldout>
+                        <ui:VisualElement name="cardsContainer" style="flex-grow: 1; margin-top: 8px; margin-right: 40px; margin-bottom: 16px; margin-left: 40px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);">
+                            <ui:TabView name="modeTabs" class="modeTabs" style="flex-grow: 1;">
+                                <ui:Tab label="List" name="List" style="flex-grow: 1;">
+                                    <ui:ListView name="cardList" allow-add="false" allow-remove="false" virtualization-method="DynamicHeight" style="flex-grow: 1;"/>
+                                </ui:Tab>
+                                <ui:Tab label="Grid" name="Grid" closeable="false" style="flex-grow: 1;">
+                                    <ui:Scroller high-value="100" direction="Horizontal" value="42" name="cardGrid"/>
+                                </ui:Tab>
+                            </ui:TabView>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="rightPage" style="flex-grow: 1;">
+                <ui:VisualElement name="title" style="flex-grow: 0; padding-top: 48px; padding-right: 192px; padding-bottom: 0; padding-left: 192px;">
+                    <ui:Label text="Word or Phrase" name="phrase" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/CCNearMyth%20Legends.otf?fileID=12800000&amp;guid=dda5ee66a09e09444b1dfcfe754b1129&amp;type=3#CCNearMyth Legends&quot;); font-size: 42px; -unity-text-align: middle-center; border-bottom-color: rgb(0, 0, 0); border-top-width: 4px; border-right-width: 4px; border-bottom-width: 4px; border-left-width: 4px; padding-bottom: 16px;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="card" style="flex-grow: 1; max-height: 600px;">
+                    <ui:VisualElement name="cardArt" style="flex-grow: 1; background-image: resource(&quot;Artwork/CardArt/Shadow Wolf&quot;); -unity-background-scale-mode: scale-to-fit; -unity-background-image-tint-color: rgb(255, 255, 255); justify-content: center; background-position-y: center; margin-top: 24px; margin-bottom: 24px;"/>
+                    <ui:VisualElement name="costValue" class="card-numbers" style="bottom: 30px; translate: 7px 0;">
+                        <ui:Label text="3" name="value" display-tooltip-when-elided="false" style="text-shadow: 0 0 6px rgb(0, 0, 0);"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="atkValue" class="card-numbers" style="bottom: 30px; translate: 135px 0;">
+                        <ui:Label text="3" name="value" display-tooltip-when-elided="false" style="text-shadow: 0 0 6px rgb(0, 0, 0);"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="defValue" class="card-numbers" style="bottom: 30px; translate: 164px -33px;">
+                        <ui:Label text="1" name="value" display-tooltip-when-elided="false" style="text-shadow: 0 0 6px rgb(0, 0, 0);"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="concepts" style="flex-grow: 1; max-height: 400px;">
+                    <ui:VisualElement name="conceptName" style="flex-grow: 0; flex-direction: row;">
+                        <ui:VisualElement name="spaceLeft" class="card-margin-spacer" style="align-self: center; justify-content: flex-end; flex-direction: row;">
+                            <ui:VisualElement focusable="true" name="leftArrow" class="concept-arrow concept-arrow-left" style="background-image: url(&quot;project://database/Assets/CardTemplates/concept%20arrows.psd?fileID=2061204944387406777&amp;guid=b32a593c095ed435abad2aa874664563&amp;type=3#concept arrows_0&quot;); width: 64px;"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1;">
+                            <ui:Label text="Concept Name" name="name" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/IMFellEnglish-Italic.ttf?fileID=12800000&amp;guid=31c36229e72e146a785a5193809ed4aa&amp;type=3#IMFellEnglish-Italic&quot;); -unity-font-style: normal; font-size: 36px; border-top-width: 4px; border-right-width: 4px; border-bottom-width: 0; border-left-width: 4px; border-top-color: rgb(0, 0, 0); padding-top: 12px; border-bottom-color: rgba(0, 0, 0, 0);"/>
+                            <ui:VisualElement name="pips" style="flex-grow: 0; flex-direction: row; justify-content: center; align-items: center; padding-top: 0; padding-right: 8px; padding-bottom: 12px; padding-left: 8px; border-bottom-color: rgb(0, 0, 0); border-top-width: 4px; border-right-width: 4px; border-bottom-width: 4px; border-left-width: 4px;">
+                                <ui:VisualElement name="pip1" class="pip"/>
+                                <ui:VisualElement name="pip2" class="pip"/>
+                                <ui:VisualElement name="pip3" class="pip"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="spaceRight" class="card-margin-spacer" style="align-self: center; flex-direction: row;">
+                            <ui:VisualElement name="rightArrow" focusable="true" class="concept-arrow concept-arrow-right" style="background-image: url(&quot;project://database/Assets/CardTemplates/concept%20arrows.psd?fileID=2978861782803344690&amp;guid=b32a593c095ed435abad2aa874664563&amp;type=3#concept arrows_1&quot;);"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="conceptBody" style="flex-grow: 1; flex-direction: row;">
+                        <ui:VisualElement name="spacer" class="card-margin-spacer"/>
+                        <ui:TabView class="modeTabs concept-tabs">
+                            <ui:Tab label="Summary" class="modeTabs">
+                                <ui:VisualElement name="textArea" style="flex-grow: 1; justify-content: space-evenly;">
+                                    <ui:Label text="This is the concept description. It explains the mechanics of the concept.&#10;Summon a 3/1 ghost wolf." name="description" emoji-fallback-support="false" style="-unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&amp;guid=5a45c4be02efb4ce4b60775a2453e362&amp;type=3#Alegreya-Medium&quot;); font-size: 24px; white-space: normal;"/>
+                                    <ui:Label text="This is flavor text for the concept. It&apos;s fun and interesting but doesn&apos;t explain any gameplay mechanics." name="flavor" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Alegreya-MediumItalic.ttf?fileID=12800000&amp;guid=ab880853e56dc5e479c666a5981e91b0&amp;type=3#Alegreya-MediumItalic&quot;); -unity-font-style: normal; font-size: 24px; white-space: normal; -unity-text-align: middle-center;"/>
+                                </ui:VisualElement>
+                            </ui:Tab>
+                            <ui:Tab label="Breakdown" class="modeTabs">
+                                <ui:VisualElement name="textArea" style="flex-grow: 1; justify-content: space-evenly; align-content: stretch;">
+                                    <ui:Label text="LP Cost: &#10;- idk&#10;- things&#10;- or something" name="breakdown" emoji-fallback-support="false" style="-unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&amp;guid=5a45c4be02efb4ce4b60775a2453e362&amp;type=3#Alegreya-Medium&quot;); font-size: 24px; white-space: normal;"/>
+                                </ui:VisualElement>
+                            </ui:Tab>
+                        </ui:TabView>
+                        <ui:VisualElement name="spacer" class="card-margin-spacer"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

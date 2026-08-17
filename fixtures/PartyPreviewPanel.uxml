@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PartyPreviewPanel: mandatory pre-battle party view + minimal interactive
+     socketing (dropdown per socket, choices = this room's played words).
+     C# hookup names:
+       #party-panel (toggle .lex-hidden) / #party-cards (clone #unit-card-template)
+       per card: #card-portrait, #card-name (prototype), #card-stats,
+                 #card-affinity (AffinityBadge instance for the root noun),
+                 #card-sockets (clone #socket-row-template per unlocked socket)
+       per socket row: #socket-slot-label (slot type), #socket-word (DropdownField —
+                 fill .choices with room words; on change re-resolve + refresh card),
+                 #socket-ability (resolved ability name), socket stars via badge
+       #party-fight-button / #party-reroll-button (debug auto-socket)
+     Live preview is the point: every dropdown change re-runs the resolver and
+     updates the card — the player watches the word become the unit. -->
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Template name="AffinityBadge" src="AffinityBadge.uxml"/>
+    <Style src="EchoTheme.uss"/>
+    <Style src="PartyPreviewPanel.uss"/>
+
+    <ui:VisualElement name="party-panel" class="party lex-panel">
+        <ui:Label class="lex-title" text="Assemble Your Echoes"/>
+        <ui:Label class="lex-label--dim party__hint"
+                  text="Socket this room's words. The words choose what answers the call."/>
+
+        <ui:ScrollView name="party-cards" class="party__cards">
+
+            <!-- EXAMPLE unit card (clone per party member; safe to delete) -->
+            <ui:VisualElement name="unit-card-template" class="party__card">
+                <ui:VisualElement class="party__card-header">
+                    <ui:VisualElement name="card-portrait" class="lex-portrait"/>
+                    <ui:VisualElement class="party__card-id">
+                        <ui:Label name="card-name" class="party__card-name" text="Prowler"/>
+                        <ui:Label name="card-stats" class="lex-label--dim" text="HP 18 · ATK 6 · DEF 1 · SPD 6"/>
+                    </ui:VisualElement>
+                    <ui:Instance name="card-affinity" template="AffinityBadge"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="card-sockets" class="party__sockets">
+                    <!-- EXAMPLE socket row (clone per unlocked socket) -->
+                    <ui:VisualElement name="socket-row-template" class="party__socket-row">
+                        <ui:Label name="socket-slot-label" class="party__socket-type" text="ATTACK"/>
+                        <ui:DropdownField name="socket-word" class="party__socket-word"/>
+                        <ui:Label name="socket-ability" class="party__socket-ability" text="→ Rend"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+        </ui:ScrollView>
+
+        <ui:VisualElement class="party__footer">
+            <ui:Button name="party-reroll-button" class="lex-button lex-button--ghost" text="Auto-fill"/>
+            <ui:Button name="party-fight-button" class="lex-button lex-button--primary" text="Fight"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,169 @@
+/* ==========================================================================
+   EchoTheme.uss — shared palette, variables, and utility classes for all
+   Echo-system UI (battle HUD, party preview, affinity badges, summon).
+   STARTER TEMPLATE: restyle freely; C# only depends on element NAMES and
+   the state classes documented in README.md, never on colors/sizes here.
+   ========================================================================== */
+
+:root {
+    /* --- Ink & parchment neutrals --- */
+    --lex-bg-deep: rgb(20, 17, 28);          /* ink-violet black          */
+    --lex-panel: rgb(34, 29, 46);            /* raised panel              */
+    --lex-panel-edge: rgb(74, 63, 99);       /* panel border violet       */
+    --lex-ink-line: rgb(52, 45, 70);         /* dividers, empty pips      */
+    --lex-text: rgb(232, 221, 196);          /* aged paper                */
+    --lex-text-dim: rgb(154, 143, 174);      /* muted lavender-gray       */
+
+    /* --- Resonance gold (the game's "score" color) --- */
+    --lex-gold: rgb(212, 169, 78);
+    --lex-gold-bright: rgb(244, 208, 122);
+
+    /* --- Affinity colors (13 affinities + neutral; mirrors AffinitySO.displayColor) --- */
+    --lex-affinity-pyre: rgb(217, 64, 26);       /* fire, heat, burning       */
+    --lex-affinity-tide: rgb(38, 115, 217);      /* water, sea, frost        */
+    --lex-affinity-gale: rgb(166, 230, 230);     /* air, wind, storm         */
+    --lex-affinity-stone: rgb(128, 107, 89);     /* earth, rock, mountains   */
+    --lex-affinity-wilds: rgb(64, 153, 64);      /* plants, growth, forests  */
+    --lex-affinity-fang: rgb(204, 140, 38);      /* beasts, hunting          */
+    --lex-affinity-grave: rgb(77, 64, 89);       /* death, decay, undeath    */
+    --lex-affinity-blood: rgb(166, 13, 38);      /* flesh, vitality          */
+    --lex-affinity-forge: rgb(140, 145, 153);    /* metal, tools, craft      */
+    --lex-affinity-whisper: rgb(191, 166, 230);  /* mind, knowledge, secrets */
+    --lex-affinity-veil: rgb(51, 38, 115);       /* shadow, dreams, fate     */
+    --lex-affinity-crown: rgb(217, 179, 51);     /* civilization, rule       */
+    --lex-affinity-wane: rgb(166, 179, 204);     /* time, memory, cycles     */
+    --lex-affinity-neutral: rgb(128, 128, 128);  /* neutral                  */
+
+    /* --- Battle vitals --- */
+    --lex-hp: rgb(201, 79, 61);
+    --lex-hp-track: rgb(58, 31, 31);
+    --lex-block: rgb(79, 127, 201);
+    --lex-heal: rgb(93, 156, 89);
+
+    /* --- Shape --- */
+    --lex-radius: 6px;
+    --lex-radius-small: 3px;
+    --lex-pad: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Panels & text
+   -------------------------------------------------------------------------- */
+.lex-panel {
+    background-color: var(--lex-panel);
+    border-color: var(--lex-panel-edge);
+    border-width: 1px;
+    border-radius: var(--lex-radius);
+    padding: var(--lex-pad);
+}
+
+.lex-title {
+    color: var(--lex-gold);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 6px;
+}
+
+.lex-label { color: var(--lex-text); font-size: 13px; }
+.lex-label--dim { color: var(--lex-text-dim); font-size: 12px; }
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.lex-button {
+    background-color: var(--lex-panel);
+    border-color: var(--lex-panel-edge);
+    border-width: 1px;
+    border-radius: var(--lex-radius);
+    color: var(--lex-text);
+    padding: 6px 16px;
+    -unity-font-style: bold;
+}
+.lex-button:hover { border-color: var(--lex-gold); color: var(--lex-gold-bright); }
+.lex-button:disabled { opacity: 0.4; }
+
+.lex-button--primary {
+    background-color: rgb(60, 48, 26);
+    border-color: var(--lex-gold);
+    color: var(--lex-gold-bright);
+}
+.lex-button--ghost { background-color: rgba(0, 0, 0, 0); border-width: 0; color: var(--lex-text-dim); }
+
+/* --------------------------------------------------------------------------
+   Affinity tinting — C# toggles exactly one .affinity--<id> class.
+   Sets border + a color swatch; extend per-component as needed.
+   -------------------------------------------------------------------------- */
+.affinity--pyre    { border-color: var(--lex-affinity-pyre); }
+.affinity--tide    { border-color: var(--lex-affinity-tide); }
+.affinity--gale    { border-color: var(--lex-affinity-gale); }
+.affinity--stone   { border-color: var(--lex-affinity-stone); }
+.affinity--wilds   { border-color: var(--lex-affinity-wilds); }
+.affinity--fang    { border-color: var(--lex-affinity-fang); }
+.affinity--grave   { border-color: var(--lex-affinity-grave); }
+.affinity--blood   { border-color: var(--lex-affinity-blood); }
+.affinity--forge   { border-color: var(--lex-affinity-forge); }
+.affinity--whisper { border-color: var(--lex-affinity-whisper); }
+.affinity--veil    { border-color: var(--lex-affinity-veil); }
+.affinity--crown   { border-color: var(--lex-affinity-crown); }
+.affinity--wane    { border-color: var(--lex-affinity-wane); }
+.affinity--neutral { border-color: var(--lex-affinity-neutral); }
+
+.affinity-swatch { width: 10px; height: 10px; border-radius: 5px; background-color: var(--lex-ink-line); }
+.affinity--pyre    .affinity-swatch { background-color: var(--lex-affinity-pyre); }
+.affinity--tide    .affinity-swatch { background-color: var(--lex-affinity-tide); }
+.affinity--gale    .affinity-swatch { background-color: var(--lex-affinity-gale); }
+.affinity--stone   .affinity-swatch { background-color: var(--lex-affinity-stone); }
+.affinity--wilds   .affinity-swatch { background-color: var(--lex-affinity-wilds); }
+.affinity--fang    .affinity-swatch { background-color: var(--lex-affinity-fang); }
+.affinity--grave   .affinity-swatch { background-color: var(--lex-affinity-grave); }
+.affinity--blood   .affinity-swatch { background-color: var(--lex-affinity-blood); }
+.affinity--forge   .affinity-swatch { background-color: var(--lex-affinity-forge); }
+.affinity--whisper .affinity-swatch { background-color: var(--lex-affinity-whisper); }
+.affinity--veil    .affinity-swatch { background-color: var(--lex-affinity-veil); }
+.affinity--crown   .affinity-swatch { background-color: var(--lex-affinity-crown); }
+.affinity--wane    .affinity-swatch { background-color: var(--lex-affinity-wane); }
+.affinity--neutral .affinity-swatch { background-color: var(--lex-affinity-neutral); }
+
+/* --------------------------------------------------------------------------
+   Star rating — four .lex-star pips; C# adds .lex-star--filled to the first N.
+   -------------------------------------------------------------------------- */
+.lex-star {
+    width: 9px; height: 9px;
+    border-radius: 5px;               /* placeholder circle; swap for star sprite */
+    background-color: var(--lex-ink-line);
+    margin-right: 2px;
+}
+.lex-star--filled { background-color: var(--lex-gold); }
+
+/* --------------------------------------------------------------------------
+   HP / resource bars — structure: .lex-bar > .lex-bar__fill (+ .lex-bar__label)
+   C# sets fill width percent: fill.style.width = Length.Percent(pct).
+   -------------------------------------------------------------------------- */
+.lex-bar {
+    height: 10px;
+    background-color: var(--lex-hp-track);
+    border-radius: var(--lex-radius-small);
+    border-width: 1px;
+    border-color: var(--lex-ink-line);
+    overflow: hidden;
+}
+.lex-bar__fill {
+    height: 100%;
+    background-color: var(--lex-hp);
+    border-radius: var(--lex-radius-small);
+}
+.lex-bar__fill--block { background-color: var(--lex-block); }
+.lex-bar__fill--resonance { background-color: var(--lex-gold); }
+
+/* Placeholder portrait block — replace background-image with real art. */
+.lex-portrait {
+    width: 44px; height: 44px;
+    border-radius: var(--lex-radius);
+    background-color: var(--lex-bg-deep);
+    border-width: 1px;
+    border-color: var(--lex-panel-edge);
+}
+
+/* Generic hidden-state toggle (C# adds/removes) */
+.lex-hidden { display: none; }

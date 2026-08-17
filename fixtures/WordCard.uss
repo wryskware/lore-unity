@@ -1,0 +1,13 @@
+:root {
+}
+
+.body {
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellEnglishSC-Regular.ttf?fileID=12800000&guid=3d4c3b3da8c83a041bfc3fc968ae4354&type=3#IMFellEnglishSC-Regular");
+    color: rgb(27, 27, 27);
+}
+
+.word {
+    font-size: 28px;
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellEnglishSC-Regular.ttf?fileID=12800000&guid=3d4c3b3da8c83a041bfc3fc968ae4354&type=3#IMFellEnglishSC-Regular");
+}

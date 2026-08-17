@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/WordCard.uss?fileID=7433441132597879392&amp;guid=25e8d2c8773edcf49990d2f8a004bea3&amp;type=3#WordCard" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/word_card.psd?fileID=2800000&amp;guid=7b2cb4c0cf25b7d46b1341f06a8b63fa&amp;type=3#word_card&quot;); position: absolute; height: 100%; top: 0; width: 100%; background-position-x: right 5px;" />
+    <ui:VisualElement name="Body" class="body" style="flex-grow: 1; margin-top: 36px; margin-right: 32px; margin-bottom: 36px; margin-left: 32px; padding-top: 25px; padding-right: 40px; padding-bottom: 25px; padding-left: 39px;">
+        <ui:Label text="Astronomy" name="Word" class="word" style="-unity-text-align: upper-center; margin-top: 30px; margin-bottom: 30px;" />
+        <ui:VisualElement name="Details" style="flex-grow: 1; margin-left: 16px; margin-right: 16px; font-size: 20px; margin-bottom: 14px;">
+            <ui:Label text="Suggested Use:" name="suggestion" />
+            <ui:VisualElement style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

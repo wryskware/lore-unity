@@ -1,0 +1,349 @@
+.panelButton {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    -unity-font-style: bold;
+    font-size: 18px;
+    text-overflow: clip;
+    white-space: nowrap;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 75px;
+    border-top-right-radius: 75px;
+    border-bottom-right-radius: 75px;
+    border-bottom-left-radius: 75px;
+}
+
+/* Easing for every portrait / menu / party button in BOTH HUDs (Wrysk, 2026-07-29 — the battle page
+   had no hover feedback and the world HUD's buttons snapped). The pseudo-state rules below already
+   existed; only the interpolation is new. 0.12s matches the .trigChip block further down, which is
+   this project's established transition idiom. */
+.panelButton {
+    transition-property: background-color, border-color, scale;
+    transition-duration: 0.12s, 0.12s, 0.12s;
+}
+
+.panelButton:hover {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgb(229, 229, 229);
+    border-right-color: rgb(229, 229, 229);
+    border-top-color: rgb(229, 229, 229);
+    border-bottom-color: rgb(229, 229, 229);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 75px;
+    border-top-right-radius: 75px;
+    border-bottom-right-radius: 75px;
+    border-bottom-left-radius: 75px;
+}
+
+.panelButton:active {
+    background-color: rgba(255, 255, 255, 0.3);
+    scale: 0.95;
+}
+
+.panelButton.selected {
+    background-color: rgba(156, 211, 245, 0.2);
+    border-left-color: rgb(229, 229, 229);
+    border-right-color: rgb(229, 229, 229);
+    border-top-color: rgb(229, 229, 229);
+    border-bottom-color: rgb(229, 229, 229);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+}
+
+.panelButtonClicked:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.panelButtonLabel {
+    position: absolute;
+    top: 0;
+    align-self: flex-start;
+    margin-top: 0;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    background-color: rgb(0, 0, 0);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 14px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    -unity-font-style: bold;
+    -unity-text-align: upper-left;
+    color: rgb(255, 255, 255);
+}
+
+.playerButtonSmall {
+    width: 75px;
+    height: 75px;
+    margin-top: 2px;
+    margin-right: 6px;
+    margin-bottom: 2px;
+    margin-left: 6px;
+}
+
+.statpointBar {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    -unity-font-style: normal;
+    color: rgb(237, 238, 243);
+}
+
+.statpointBar .unity-progress-bar__progress {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.statpointBar .unity-progress-bar__background {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgb(11, 8, 14);
+}
+
+.hpBar .unity-progress-bar__progress {
+    background-color: rgb(255, 52, 240);
+}
+
+.manaBar .unity-progress-bar__progress {
+    background-color: rgb(43, 137, 248);
+}
+
+.energyBar .unity-progress-bar__progress {
+    background-color: rgb(255, 160, 0);
+}
+
+.resourceBar {
+}
+
+.portraitChip {
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.portraitChip__button {
+    background-color: rgba(188, 188, 188, 0);
+    -unity-background-scale-mode: stretch-to-fill;
+    flex-grow: 1;
+    aspect-ratio: 1;
+}
+
+.portraitChip__label {
+    -unity-text-align: upper-center;
+    right: auto;
+    flex-grow: 1;
+}
+
+.portrait--lexomancer .portraitChip__button {
+    background-image: url("project://database/Assets/Sprites/player_avatar.png?fileID=2800000&guid=75894a48e2a8cb641a83a61643fa4734&type=3#player_avatar");
+}
+
+.menuCluster {
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-bottom: 6px;
+}
+
+.menuCluster__item {
+    flex-grow: 0;
+}
+
+.menuCluster__button {
+    background-color: rgba(188, 188, 188, 0);
+    aspect-ratio: 1;
+}
+
+.menuCluster__button--bag {
+    background-image: url("project://database/Assets/Sprites/inventory_bag.png?fileID=2800000&guid=0d0586360af8ca141b4a8c354f4f670d&type=3#inventory_bag");
+}
+
+.menuCluster__button--lexicon {
+    background-image: url("project://database/Assets/Sprites/lexonomicon.png?fileID=2800000&guid=7fa4fa8d87ae73d439757441ddeafc17&type=3#lexonomicon");
+}
+
+.unitFrame {
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: stretch;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.unitFrame--enemy {
+    flex-direction: row-reverse;
+}
+
+.unitFrame__stats {
+    flex-grow: 1;
+    position: relative;
+    align-items: stretch;
+    align-self: stretch;
+    justify-content: center;
+}
+
+/* The enemy variant used to spread its bars (justify-content: space-between, salvaged from the
+   retired BattleUI.uxml). Dropped 2026-07-29: the stats column now leads with the unit's name, and
+   spreading pushed that name to the top of a full-height frame while its own bars sat at the bottom,
+   which reads as two unrelated blocks. Both variants now centre the name+bars group, so the only
+   remaining difference between ally and enemy frames is the mirror. */
+
+/* The unit's NAME is a stats-column row above the bars (Wrysk, 2026-07-29), so the portrait chip's
+   own floating label — which is absolutely positioned over the button's top-left corner — is dead
+   weight inside a unit frame and is turned off here rather than re-laid per consumer. Every other
+   PortraitChip consumer (the world HUD's party avatar, the battle player frame) keeps it: those
+   chips label a BUTTON's destination, not a unit. */
+.unitFrame .portraitChip__label {
+    display: none;
+}
+
+.unitFrame__name {
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellEnglishSC-Regular.ttf?fileID=12800000&guid=3d4c3b3da8c83a041bfc3fc968ae4354&type=3#IMFellEnglishSC-Regular");
+    font-size: 15px;
+    color: rgb(226, 201, 255);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* An enemy frame mirrors (row-reverse), so its stats column sits to the LEFT of the portrait and its
+   text reads toward the portrait. Right-aligned text in UI Toolkit overruns to the LEFT and off the
+   page without nowrap + ellipsis, which .unitFrame__name above already carries. */
+.unitFrame--enemy .unitFrame__name {
+    -unity-text-align: middle-right;
+}
+
+.trigChip {
+    flex-direction: row;
+    align-items: center;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(61, 57, 84);
+    border-right-color: rgb(61, 57, 84);
+    border-top-color: rgb(61, 57, 84);
+    border-bottom-color: rgb(61, 57, 84);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgb(23, 18, 29);
+    padding-left: 11px;
+    padding-right: 11px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 8px;
+    transition-property: border-color, scale;
+    transition-duration: 0.12s, 0.12s;
+}
+
+.trigChip:hover {
+    border-left-color: rgb(184, 172, 255);
+    border-right-color: rgb(184, 172, 255);
+    border-top-color: rgb(184, 172, 255);
+    border-bottom-color: rgb(184, 172, 255);
+}
+
+.trigChip:focus {
+    border-left-color: rgb(226, 201, 255);
+    border-right-color: rgb(226, 201, 255);
+    border-top-color: rgb(226, 201, 255);
+    border-bottom-color: rgb(226, 201, 255);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.trigChip:active {
+    scale: 0.96 0.96;
+}
+
+.trigChip__label {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    font-size: 13px;
+    color: rgb(226, 201, 255);
+    margin-right: 6px;
+    white-space: nowrap;
+}
+
+.trigChip__value {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    font-size: 12px;
+    color: rgb(226, 201, 255);
+    white-space: nowrap;
+}
+
+.trigChip__glyph {
+    font-size: 12px;
+    margin-right: 5px;
+    color: rgb(154, 91, 214);
+}
+
+.trigChip--fires {
+    border-left-color: rgba(255, 160, 0, 0.75);
+    border-right-color: rgba(255, 160, 0, 0.75);
+    border-top-color: rgba(255, 160, 0, 0.75);
+    border-bottom-color: rgba(255, 160, 0, 0.75);
+}
+
+.trigChip--fires .trigChip__value {
+    color: rgb(255, 160, 0);
+}
+
+.trigChip--echo {
+    border-left-color: rgba(154, 91, 214, 0.5);
+    border-right-color: rgba(154, 91, 214, 0.5);
+    border-top-color: rgba(154, 91, 214, 0.5);
+    border-bottom-color: rgba(154, 91, 214, 0.5);
+}
+
+.trigChip--echo .trigChip__label {
+    color: rgb(184, 145, 224);
+}
+
+.trigChip--pending {
+    opacity: 0.82;
+}
+
+.trigChip--pending .trigChip__label {
+    -unity-font-style: italic;
+}
+
+.trigChip--pending .trigChip__value {
+    -unity-font-style: italic;
+}
+
+.trigOverflowChip {
+    background-color: rgb(34, 25, 52);
+}
+
+.trigOverflowChip .trigChip__label {
+    color: rgb(184, 172, 255);
+    margin-right: 0;
+}

@@ -1,0 +1,1246 @@
+.battlePage {
+    flex-grow: 1;
+    align-self: stretch;
+    background-color: rgba(0, 0, 0, 0);
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+}
+
+.topRegion {
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.topRegion__center {
+    flex-grow: 1;
+    flex-direction: column;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.topRegion__right {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 380px;
+    min-height: 120px;
+}
+
+/* 380px, matching .topRegion__right (Wrysk, 2026-07-29). The column was 320 while the player
+   portrait was a small square; a portrait that fills the frame top-to-bottom is as wide as the frame
+   is tall (~130pt with the menu cluster in the body), which left the 75pt Bag/Lexinomicon buttons
+   beside it nothing to sit in and squeezed them. Widening is the fix that keeps the portrait square
+   AND the menu buttons at their authored size, and it makes the two flanking columns symmetric. */
+.playerColumn {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 380px;
+    flex-direction: column;
+}
+
+/* align-items: stretch is what makes the portrait fill the frame top-to-bottom, exactly as the world
+   HUD's InfoPanel does it (WorldUIPanel.uxml's _top is a stretch row and its PortraitChip carries no
+   sizing of its own). The chip's button is flex-grow: 1 + aspect-ratio: 1, so the stretched height
+   drives a square width; that is why .playerFrame__portrait below must NOT also declare a
+   width/aspect-ratio — two sources for one square is how it ends up non-round (skill section 3.5). */
+.playerFrame {
+    flex-direction: row;
+    align-items: stretch;
+    align-self: stretch;
+    background-color: rgb(32, 36, 48);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(156, 211, 245);
+    border-right-color: rgb(156, 211, 245);
+    border-top-color: rgb(156, 211, 245);
+    border-bottom-color: rgb(156, 211, 245);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+}
+
+.playerFrame__portrait {
+    flex-shrink: 0;
+}
+
+.playerFrame__body {
+    flex-grow: 1;
+    margin-left: 8px;
+}
+
+.playerFrame__bars {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.partyFrames {
+    flex-direction: column;
+    align-self: stretch;
+    margin-top: 8px;
+}
+
+/* The stretch + min-height rules for the three unit-frame variants are TWO-CLASS selectors on
+   purpose (.unitFrame.partyFrame, not .partyFrame). Measured 2026-07-29: a single-class rule here
+   LOSES to .unitFrame's own align-items: flex-start in HudComponents.uss, even though BattleScreen.uss
+   is listed second in BattleScreen.uxml. Sheet order only breaks ties between sheets attached at the
+   SAME element — HudComponents.uss is attached by the UnitFrame template itself, i.e. on the
+   TemplateContainer that wears .partyFrame, which is deeper in the tree than the document root where
+   BattleScreen.uss lives, and the nearer sheet wins. Specificity is compared before either, hence the
+   extra class. (This is a real correction to the skill's "stylesheet order is load-bearing" note: it is
+   only load-bearing WITHIN one attachment point.) */
+.unitFrame.partyFrame,
+.unitFrame.enemyFrame {
+    align-items: stretch;
+    min-height: 100px;
+}
+
+.partyFrame {
+    align-self: stretch;
+    background-color: rgb(34, 25, 52);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(61, 57, 84);
+    border-right-color: rgb(61, 57, 84);
+    border-top-color: rgb(61, 57, 84);
+    border-bottom-color: rgb(61, 57, 84);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+}
+
+/* No width here on purpose (Wrysk, 2026-07-29: "the portrait should stretch top-to-bottom of the
+   frame"). The frames are align-items: stretch, so the chip takes the frame's full content height and
+   the button's aspect-ratio: 1 turns that into the width — the same mechanism the world HUD's party
+   portrait uses. The min-height on each frame above is therefore what actually sets how big the
+   portrait is: content height = min-height minus that frame's padding and border. */
+.partyFrame .portraitChip,
+.enemyFrame .portraitChip,
+.battleGuardianFrame .portraitChip {
+    flex-shrink: 0;
+}
+
+.partyFrame .portraitChip__button,
+.enemyFrame .portraitChip__button,
+.battleGuardianFrame .portraitChip__button {
+    background-color: rgb(58, 44, 80);
+}
+
+.unitFrame--defeated {
+    opacity: 0.45;
+}
+
+/* The aim beat (D-0016). An enemy frame that is OFFERING itself, and the one the cast is currently
+   aimed at - hover and pre-highlight are the same state, so the frame carrying the mark is the frame
+   a confirm hits. Two classes rather than one because "pickable" and "picked" are different
+   questions the player asks at a glance, and the second is deliberately much louder.
+
+   TWO classes on purpose (lexomancy-ui §3.5): .enemyFrame - one class, further down this same sheet -
+   authors the frame's border colour, so a single-class modifier would lose the tie to it and the aim
+   would silently paint nothing. */
+.unitFrame.unitFrame--aimable {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgba(154, 220, 255, 0.45);
+    border-right-color: rgba(154, 220, 255, 0.45);
+    border-top-color: rgba(154, 220, 255, 0.45);
+    border-bottom-color: rgba(154, 220, 255, 0.45);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+/* The widths are re-authored here as well as the colours: the PRIMARY enemy's frame carries no
+   border of its own (the slot around it does), so a colour alone would have nothing to paint. */
+.unitFrame.unitFrame--aimed {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 4px;
+    border-left-color: rgb(154, 220, 255);
+    border-right-color: rgb(154, 220, 255);
+    border-top-color: rgb(154, 220, 255);
+    border-bottom-color: rgb(154, 220, 255);
+    background-color: rgba(154, 220, 255, 0.12);
+    scale: 1.02 1.02;
+}
+
+.unitFrame--defeated .portraitChip__button {
+    background-color: rgb(30, 24, 40);
+    border-color: rgb(64, 58, 78);
+}
+
+.unitFrame--defeated .unitFrame__name {
+    color: rgb(122, 116, 134);
+}
+
+/* The block that used to be here re-laid the portrait chip's floating label in flow UNDER the
+   portrait, at 10px, for every battle unit frame. Gone 2026-07-29: the name moved into the stats
+   column above the bars (UnitFrame.uxml's UnitName + .unitFrame__name in HudComponents.uss), so the
+   chip's own label is hidden inside a unit frame and there is nothing left to re-lay. */
+
+.statusBarRow {
+    align-self: stretch;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(61, 57, 84);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(211, 167, 255);
+    border-right-color: rgb(211, 167, 255);
+    border-top-color: rgb(211, 167, 255);
+    border-bottom-color: rgb(211, 167, 255);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.statusBarCell {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 18px;
+}
+
+.statusBarText {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    font-size: 14px;
+    color: rgb(198, 186, 226);
+}
+
+.statusBarTextValue {
+    -unity-font-style: bold;
+    color: rgb(237, 238, 243);
+    margin-left: 6px;
+}
+
+.battleResonanceArea {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 260px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.battleResonanceLabel {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    -unity-font-style: bold;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgb(211, 167, 255);
+    margin-bottom: 2px;
+}
+
+.battleResonanceBar {
+    height: 26px;
+    align-self: stretch;
+}
+
+.battleResonanceBar .unity-progress-bar__background {
+    height: 26px;
+}
+
+.battleResonanceBar .unity-progress-bar__container {
+    height: 26px;
+}
+
+.battleResonanceBar .unity-progress-bar__title {
+    font-size: 15px;
+}
+
+.battleResonanceBar.reso-unknown .unity-progress-bar__progress {
+    background-color: rgba(255, 160, 0, 0.18);
+}
+
+.battleMenuButton--unavailable {
+    opacity: 0.3;
+}
+
+/* .panelButtonLabel is ABSOLUTELY positioned and sized by its own text (skill section 3.5), so
+   "Lexinomicon " at the world HUD's 14px runs past the player frame's right border and gets clipped
+   by it — measured once the portrait grew and left the body column ~162pt wide. The battle cluster
+   therefore wears smaller caption chips. Two-class selector for the same attachment-point reason as
+   the unit-frame rules above: .panelButtonLabel comes from HudComponents.uss, attached by the
+   MenuCluster template itself. */
+.battleMenuCluster .panelButtonLabel {
+    font-size: 11px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.battleMenuCluster__reason {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    font-size: 11px;
+    color: rgb(154, 143, 184);
+    -unity-font-style: italic;
+    white-space: normal;
+}
+
+.battleGuardianSlot {
+    background-color: rgb(34, 25, 52);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(211, 167, 255);
+    border-right-color: rgb(211, 167, 255);
+    border-top-color: rgb(211, 167, 255);
+    border-bottom-color: rgb(211, 167, 255);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding-bottom: 8px;
+}
+
+/* The fight's headline threat, so its portrait is the biggest one on the page: 120 minus the shared
+   .unitFrame's 12px padding gives a ~96pt disc, where it used to be a fixed 84. */
+.unitFrame.battleGuardianFrame {
+    align-items: stretch;
+    min-height: 120px;
+}
+
+.battleGuardianFrame .unitFrame__name {
+    font-size: 18px;
+}
+
+.enemyFrames {
+    flex-direction: column;
+    align-self: stretch;
+    margin-top: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.enemyFrame {
+    align-self: stretch;
+    background-color: rgb(46, 34, 68);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(61, 57, 84);
+    border-right-color: rgb(61, 57, 84);
+    border-top-color: rgb(61, 57, 84);
+    border-bottom-color: rgb(61, 57, 84);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+}
+
+.telegraphCue {
+    margin-left: 12px;
+    margin-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(58, 44, 80);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-left-width: 3px;
+    border-left-color: rgb(211, 167, 255);
+    transition-property: background-color, border-left-color, border-left-width, scale;
+    transition-duration: 0.12s, 0.12s, 0.12s, 0.12s;
+}
+
+.telegraphCue:hover {
+    background-color: rgb(74, 56, 102);
+    border-left-width: 5px;
+}
+
+.telegraphCue:active {
+    scale: 0.98 0.98;
+}
+
+.telegraphCue:focus {
+    border-left-color: rgb(255, 205, 84);
+}
+
+.telegraphCue--pending {
+    border-left-color: rgb(224, 74, 92);
+}
+
+.telegraphCue--countered {
+    border-left-color: rgb(120, 200, 160);
+}
+
+/* A HYPOTHETICAL counter, projected by hovering a candidate row (D-0014) - distinct from
+   --countered, which reports a counter the live cast is really landing. Dim plus a struck line, so it
+   reads as "this would be answered" and can never be mistaken for a resolved one. */
+.telegraphCue--projected {
+    opacity: 0.6;
+    border-left-color: rgb(255, 160, 0);
+}
+
+/* USS has no text-decoration, so the strike is a drawn element inside the ability label. Its 50% top
+   is the label's own box, which is why the label may not wrap while it is showing (it does not: the cue
+   is one ability name). */
+.telegraphCue__strike {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background-color: rgb(255, 160, 0);
+}
+
+.telegraphCue__ability {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    -unity-font-style: bold;
+    font-size: 16px;
+    color: rgb(237, 238, 243);
+    white-space: normal;
+}
+
+.telegraphCue__timing {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    font-size: 13px;
+    color: rgb(198, 186, 226);
+    white-space: normal;
+}
+
+/* The timeline lost its panel backing during an earlier pass and floated on the page with no chrome
+   (Wrysk, 2026-07-29). It is framed like its neighbours again by wearing the page's own .region class
+   in BattleScreen.uxml — the same backing .previewRow and .composerRow carry — rather than a fourth
+   hand-copied border/background block here. */
+.timelineRow {
+    align-self: stretch;
+    min-height: 72px;
+    margin-top: 8px;
+}
+
+/* Two classes deliberately: .region is declared LATER in this sheet than .timelineRow, so a
+   single-class rule here would lose the padding tie to it (equal specificity, later wins). */
+.region.timelineRow {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.timeline__header {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    -unity-font-style: bold;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgb(154, 143, 184);
+    margin-bottom: 4px;
+    margin-left: 4px;
+}
+
+.timeline__body {
+    flex-grow: 1;
+    flex-direction: row;
+    align-self: stretch;
+}
+
+.timeline__labels {
+    width: 168px;
+    flex-shrink: 0;
+}
+
+.timeline__tracks {
+    flex-grow: 1;
+    position: relative;
+}
+
+/* A lane label and its track are ONE row and must have the identical box, because the label column
+   and the track column are separate flex columns whose row N must land on the same y (measured
+   2026-07-29: they did not — labels ran at a 25.5pt pitch against the tracks' 21.75pt, and started
+   3.75pt lower, so by the third lane the name was sitting on the wrong track).
+
+   Cause: UI Toolkit's default runtime theme gives every Label a margin AND padding of its own (both
+   resolved 3.75pt here). `.timeline__laneLabel` set only height and margin-bottom, so the theme's
+   margin-top survived and added itself to every row's pitch — a plain VisualElement track has no
+   such default, which is what made the two columns disagree. Anything sharing a row with a
+   non-Label sibling has to zero those explicitly.
+
+   flex-shrink is the same asymmetry waiting to happen: the theme already gives a Label
+   flex-shrink 0 while Yoga's default for the track is 1, so the moment the lanes overflow the body
+   (five lanes at this pitch do) the tracks would squeeze and the labels would not. Both are pinned
+   at 0 and the region grows instead. */
+.timeline__laneLabel {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 4px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: middle-right;
+    padding-right: 8px;
+    font-size: 12px;
+    color: rgb(154, 143, 184);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timeline__laneLabel--enemy {
+    color: rgb(224, 143, 152);
+}
+
+.timeline__laneLabel--interactive {
+    color: rgb(255, 205, 84);
+}
+
+.timeline__laneLabel--dead {
+    opacity: 0.4;
+}
+
+.timeline__track {
+    height: 18px;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    position: relative;
+    background-color: rgb(30, 26, 42);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(38, 32, 51);
+    border-right-color: rgb(38, 32, 51);
+    border-top-color: rgb(38, 32, 51);
+    border-bottom-color: rgb(38, 32, 51);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.timeline__note {
+    position: absolute;
+    top: 4px;
+    width: 6px;
+    height: 8px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background-color: rgb(255, 52, 240);
+}
+
+.timeline__note--enemy {
+    background-color: rgb(224, 74, 92);
+}
+
+.timeline__note--past {
+    opacity: 0.28;
+}
+
+.timeline__telegraph {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: 10px;
+    background-color: rgba(224, 74, 92, 0.55);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(224, 74, 92);
+    border-right-color: rgb(224, 74, 92);
+    border-top-color: rgb(224, 74, 92);
+    border-bottom-color: rgb(224, 74, 92);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.timeline__telegraph--graze {
+    opacity: 0.6;
+}
+
+.timeline__telegraph--blunt {
+    opacity: 0.4;
+}
+
+.timeline__telegraph--nullify {
+    opacity: 0.3;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.timeline__telegraph--shove {
+    border-bottom-width: 5px;
+    border-bottom-color: rgb(255, 205, 84);
+}
+
+.timeline__playhead {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: rgb(255, 205, 84);
+}
+
+/* A unit's NEXT note, lit while its Focus row is hovered (WS-P; 00_Overview §6 - "both surfaces
+   light together"). Focus cyan, because that is what the highlight is about; the note keeps its own
+   shape so the lane still reads as the same beat, brighter. */
+.timeline__note--focus {
+    background-color: rgb(154, 220, 255);
+    scale: 1.5 1.5;
+}
+
+/* A commissioned note: an ally's Special is spoken for at this beat (D-0015(b)). Drawn OVER the
+   note rather than replacing it - the beat is still that unit's ordinary note, it has just been
+   claimed - and carrying no letter, because the line below says who it is aimed at (Wrysk, A5). */
+.timeline__commission {
+    position: absolute;
+    top: 2px;
+    width: 11px;
+    height: 12px;
+    rotate: 45deg;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(154, 220, 255);
+    border-right-color: rgb(154, 220, 255);
+    border-top-color: rgb(154, 220, 255);
+    border-bottom-color: rgb(154, 220, 255);
+    background-color: rgba(154, 220, 255, 0.25);
+}
+
+/* The aim: one segment per lane the line crosses, each in percent of its own row (see
+   BattleTimelineView.PaintCommission for why it is not one element). The 4px break at every lane
+   boundary is the tracks' own margin showing through. */
+.timeline__aimLine {
+    position: absolute;
+    width: 1px;
+    background-color: rgba(154, 220, 255, 0.55);
+}
+
+.timeline__aimTarget {
+    position: absolute;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: rgb(154, 220, 255);
+}
+
+/* A commissioned Special landed on THIS unit instead of the one it was aimed at, because that one
+   had fallen (D-0016 item 3). Held for a couple of seconds by BattleScreenHud - the redirect has to
+   be seen, not just logged. */
+.timeline__track--reaimed {
+    background-color: rgba(154, 220, 255, 0.18);
+    border-left-color: rgb(154, 220, 255);
+    border-right-color: rgb(154, 220, 255);
+    border-top-color: rgb(154, 220, 255);
+    border-bottom-color: rgb(154, 220, 255);
+}
+
+.timeline__laneLabel--reaimed {
+    color: rgb(154, 220, 255);
+}
+
+.timeline__empty {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    font-size: 13px;
+    color: rgb(154, 143, 184);
+    -unity-font-style: italic;
+    margin-left: 4px;
+}
+
+.centerStage {
+    flex-grow: 1;
+    align-self: stretch;
+    margin-top: 8px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.composerRow {
+    align-self: stretch;
+    min-height: 200px;
+    margin-top: 8px;
+}
+
+.previewRow {
+    align-self: stretch;
+    min-height: 96px;
+    margin-top: 8px;
+}
+
+.region {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(211, 167, 255, 0.55);
+    border-right-color: rgba(211, 167, 255, 0.55);
+    border-top-color: rgba(211, 167, 255, 0.55);
+    border-bottom-color: rgba(211, 167, 255, 0.55);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgba(61, 57, 84, 0.35);
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+}
+
+.region__label {
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellEnglishSC-Regular.ttf?fileID=12800000&guid=3d4c3b3da8c83a041bfc3fc968ae4354&type=3#IMFellEnglishSC-Regular");
+    color: rgba(211, 167, 255, 0.85);
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+
+/* ======================= PreviewArea: the decision strip (D-0014) =======================
+   Rewritten 2026-07-29. What it replaced: a group per candidate word with a row per SENSE, a word-level
+   headline chip, and the cast gate's line-by-line verdict block underneath. That answered "what is this
+   word" - the inspector's job - instead of "what happens if I cast, and is an alternative better", and
+   it printed the stat arithmetic D-0014 bans ("Broad +10/+2/+2" is meaningless to a player).
+
+   Now: one row per candidate word, [rank][gem][Counter][Focus][Broad], colour carrying the columns
+   (gold / cyan / magenta) with no column labels, and NO standing text on the surface at all. The frame
+   itself is not defined here - #PreviewArea wears the page's own .region class in BattleScreen.uxml, so
+   there is one definition of what a panel on this page looks like. The paddings below are the
+   .region.previewRow tie, two classes for the same specificity reason .region.timelineRow spells out. */
+.region.previewRow {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: rgb(28, 21, 44);
+    max-height: 480px;
+}
+
+/* Why this region is OPAQUE while its neighbours are a 0.35 wash: it is the only region on the
+   page that sits over the BRIGHT part of the stage art and carries dense small text over it. Measured
+   2026-07-29 at the .region default: the frame read as absent (Wrysk's original complaint) and the
+   text fought the fire in the backdrop. The colour is ComposerChrome.Module, i.e. the same
+   backdrop the bottom corner frames already use, so the page still has one panel look and not two.
+   The stage camera's clear colour is the page's own backdrop colour (see the 4.5 note in the UI skill),
+   which is why an opaque panel here costs nothing visually where there are no sprites. Measured at
+   alpha 0.92 first: URP composites in linear space, so 8% of the guardian's bright placeholder sprite
+   still came through as a visible (79,39,54) smear inside the panel where a plain sRGB calculation
+   predicted (45,29,49). Opaque is the honest fix - "this is a panel", not a window.
+   NOTE: this rgb is duplicated in BattlePreviewAreaView's fade texture colour; they must match. */
+
+.previewArea {
+    align-self: stretch;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* The submit-time choice is signalled by the FRAME (and by the rows becoming pickable), never by rows
+   appearing and never by a caption - "SHOW DON'T TELL", twice-enforced. */
+.previewArea--choosing {
+    border-left-color: rgb(255, 205, 84);
+    border-right-color: rgb(255, 205, 84);
+    border-top-color: rgb(255, 205, 84);
+    border-bottom-color: rgb(255, 205, 84);
+    /* 2px, not the .region default 1px: measured on screen, a 1px gold line at this scale reads as the
+       same lavender frame the region always has, and the frame is the ONLY thing that says the strip is
+       asking a question now (there is no caption, by ruling). */
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    background-color: rgb(36, 26, 50);
+}
+
+/* The scroller lives inside a relative wrapper so the bottom fade can be absolutely positioned over
+   its last rows. */
+.previewScrollWrap {
+    position: relative;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+/* Bounded: eight rows of gem + chips do not fit the top region and must not try (measured 2026-07-29
+   at the old density: 1147 points inside an 839-point region, painting across the centre stage and the
+   hand). 300 shows roughly six rows; the rest scroll. */
+.previewRows {
+    flex-direction: column;
+    max-height: 300px;
+    flex-shrink: 0;
+}
+
+.previewRows .unity-scroll-view__content-container {
+    flex-direction: column;
+}
+
+/* A thin scrollbar, the region's own colours, no arrow buttons - they are a 4px target nobody will hit
+   and the wheel and the dragger both work without them. */
+.previewRows .unity-scroller--vertical {
+    width: 8px;
+}
+
+.previewRows .unity-scroller__low-button,
+.previewRows .unity-scroller__high-button {
+    display: none;
+}
+
+.previewRows .unity-base-slider__tracker {
+    background-color: rgba(5, 4, 8, 0.55);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.previewRows .unity-base-slider__dragger {
+    background-color: rgb(124, 74, 168);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 8px;
+}
+
+/* "There is more below", with no words in it (D-0014 bans a "+N more..." line). The gradient is a
+   generated texture - USS has no linear-gradient at all - see BattleProjectionArt. */
+.previewFade {
+    position: absolute;
+    left: 0;
+    right: 10px;
+    bottom: 0;
+}
+
+/* ---------------------------- one candidate row ----------------------------
+   .previewCand, NOT .previewRow: the page's own layout class for the whole region is already
+   `previewRow` (see above - "the preview row of the page"), and it carries min-height: 96px. A candidate
+   row wearing the same name silently inherited that: measured 96pt rows around a 60pt gem, which reads
+   as a spacing bug and is a name collision. */
+.previewCand {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-bottom: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    transition-property: background-color, border-color;
+    transition-duration: 0.12s, 0.12s;
+}
+
+/* Hover is applied by the painter from a geometry POLL, not by :hover - the rows are cleared and
+   rebuilt on every tile edit, so a leave event fires on a destroyed element and the projection the
+   hover owns would be stranded (lexomancy-ui section 6). One mechanism for the look and the
+   projection, so they cannot disagree about what is hovered. */
+.previewCand--hover {
+    background-color: rgba(124, 74, 168, 0.16);
+    border-left-color: rgb(61, 57, 84);
+    border-right-color: rgb(61, 57, 84);
+    border-top-color: rgb(61, 57, 84);
+    border-bottom-color: rgb(61, 57, 84);
+}
+
+/* The completion the Line is showing. Marked in place, never reprinted elsewhere. */
+.previewCand--current {
+    background-color: rgba(184, 172, 255, 0.09);
+    border-left-color: rgb(184, 172, 255);
+    border-right-color: rgb(184, 172, 255);
+    border-top-color: rgb(184, 172, 255);
+    border-bottom-color: rgb(184, 172, 255);
+}
+
+/* Choosing: the rows are the affordance. A pointer cursor as well as the frame, because a control that
+   can be clicked should say so without a sentence under it. */
+.previewCand--pickable {
+    cursor: link;
+}
+
+.previewCand--pickable:hover {
+    border-left-color: rgb(255, 205, 84);
+    border-right-color: rgb(255, 205, 84);
+    border-top-color: rgb(255, 205, 84);
+    border-bottom-color: rgb(255, 205, 84);
+}
+
+.previewCand--pickable:focus {
+    border-left-color: rgb(255, 205, 84);
+    border-right-color: rgb(255, 205, 84);
+    border-top-color: rgb(255, 205, 84);
+    border-bottom-color: rgb(255, 205, 84);
+}
+
+/* Cannot be cast right now (unaffordable, repeated, dead channel). Dimmed, not removed: the row is
+   still a real alternative and its gem is still inspectable. */
+.previewCand--blocked {
+    opacity: 0.62;
+}
+
+.previewCand__rank {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    width: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 4px;
+    flex-shrink: 0;
+    font-size: 10px;
+    color: rgb(110, 102, 140);
+    -unity-text-align: middle-right;
+    white-space: nowrap;
+}
+
+/* The gem placeholder. Sized by the gem host in POINTS converted from its pixel footprint (the gem
+   layer is a uGUI canvas with no CanvasScaler, so it measures in pixels - lexomancy-ui section 3), and
+   the width follows the word. The ring is the inspect affordance: the gem itself raycasts nothing, so
+   hover/click/submit land here, and a ring rather than a tint because the gem's own colours carry its
+   affinity. */
+.previewCand__gem {
+    flex-shrink: 0;
+    margin-right: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    transition-property: border-color;
+    transition-duration: 0.12s;
+}
+
+.previewCand--hover .previewCand__gem {
+    border-left-color: rgba(184, 172, 255, 0.55);
+    border-right-color: rgba(184, 172, 255, 0.55);
+    border-top-color: rgba(184, 172, 255, 0.55);
+    border-bottom-color: rgba(184, 172, 255, 0.55);
+}
+
+/* ---------------------------- the strength chips ----------------------------
+   Every chip wears .trigChip from HudComponents.uss - the same chip the world HUD's trigger strip
+   wears, one definition for two surfaces (design 6.6 section 4: "reuse the score-preview chips").
+   Only the channel colour, the spacing and the dimming are local. */
+.previewChip {
+    margin-right: 7px;
+    margin-bottom: 0;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    transition-property: border-color, opacity, scale;
+    transition-duration: 0.12s, 0.18s, 0.12s;
+}
+
+/* Every Label inside a chip zeroes the runtime theme's OWN margin and padding (both resolved 3.75pt
+   here). Measured: they added 7.5pt to every chip's height and made a chip 37pt tall beside a 60pt gem,
+   which reads as "the chips are too big" and is really the invisible half of the theme (skill 3.5). */
+.previewChip__label,
+.previewChip__pending,
+.previewChip .trigChip__value {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.previewChip__label {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    font-size: 11px;
+    margin-right: 6px;
+    color: rgb(226, 201, 255);
+    white-space: nowrap;
+}
+
+.previewChip__pending {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    font-size: 12px;
+    color: rgb(150, 140, 180);
+    -unity-font-style: italic;
+    white-space: nowrap;
+}
+
+/* Counter - gold, and the same gold the telegraph cue and the trigger strip's firing chip already
+   speak in. */
+.previewChip--counter {
+    border-left-color: rgb(255, 160, 0);
+    border-right-color: rgb(255, 160, 0);
+    border-top-color: rgb(255, 160, 0);
+    border-bottom-color: rgb(255, 160, 0);
+}
+
+.previewChip--counter .previewChip__label {
+    color: rgb(255, 160, 0);
+}
+
+/* Focus - cyan. */
+.previewChip--focus {
+    border-left-color: rgba(154, 220, 255, 0.55);
+    border-right-color: rgba(154, 220, 255, 0.55);
+    border-top-color: rgba(154, 220, 255, 0.55);
+    border-bottom-color: rgba(154, 220, 255, 0.55);
+}
+
+.previewChip--focus .previewChip__label {
+    color: rgb(154, 220, 255);
+}
+
+.previewChip--focus .trigChip__value {
+    color: rgb(154, 220, 255);
+}
+
+/* Broad - magenta, pips only. */
+.previewChip--broad {
+    border-left-color: rgba(255, 52, 240, 0.5);
+    border-right-color: rgba(255, 52, 240, 0.5);
+    border-top-color: rgba(255, 52, 240, 0.5);
+    border-bottom-color: rgba(255, 52, 240, 0.5);
+}
+
+/* Power (LP) and Rarity - the two WORD scores, added 2026-08-12 for the Spellslinger bar. Wrysk
+   chose both hues by pointing at where they already live, and neither is a new colour:
+
+     LP     rgb(255, 160, 0)  - "that yellow-orange from the old resonance bar", i.e. the fill of
+                                .energyBar .unity-progress-bar__progress in HudComponents.uss, which
+                                is what the world HUD's Lexical Resonance bar is painted with.
+     rarity rgb(255, 205, 84) - "the yellow from guardian battle", i.e. this page's own yellow: the
+                                timeline playhead, the interactive lane label, and the frame the
+                                strip wears while choosing.
+
+   They are deliberately close - two readings of the same kind of thing (how good is this WORD,
+   before any ability touches it) sitting side by side, so a sibling pair is the honest signal and a
+   contrast would imply they answer different questions. LP carries a printed number and rarity
+   carries pips, so the two are told apart by SHAPE first and hue second (the colourblind-safe half).
+
+   Note the LP hue is byte-identical to .previewChip--counter's gold. The two can never appear on one
+   row by construction - Spellslinger scores no counters, the guardian supplies no word power - and if
+   that ever stops being true this is the line to change. */
+.previewChip--power {
+    border-left-color: rgb(255, 160, 0);
+    border-right-color: rgb(255, 160, 0);
+    border-top-color: rgb(255, 160, 0);
+    border-bottom-color: rgb(255, 160, 0);
+}
+
+.previewChip--power .previewChip__label {
+    color: rgb(255, 160, 0);
+    margin-right: 0;
+}
+
+.previewChip--rarity {
+    border-left-color: rgba(255, 205, 84, 0.55);
+    border-right-color: rgba(255, 205, 84, 0.55);
+    border-top-color: rgba(255, 205, 84, 0.55);
+    border-bottom-color: rgba(255, 205, 84, 0.55);
+}
+
+.previewChip--resolving {
+    border-left-color: rgba(61, 57, 84, 0.8);
+    border-right-color: rgba(61, 57, 84, 0.8);
+    border-top-color: rgba(61, 57, 84, 0.8);
+    border-bottom-color: rgba(61, 57, 84, 0.8);
+    background-color: rgba(23, 18, 29, 0.6);
+}
+
+/* Channel isolation (D-0014): hovering a chip dims the other channels in EVERY row. Applied per chip
+   by the painter because UI Toolkit's USS has no :not() selector - see BattlePreviewIsolation, which is
+   where the rule itself lives and is tested. */
+.previewChip--dim {
+    opacity: 0.22;
+}
+
+/* Broad magnitude: pips, as ELEMENTS. Not the mockup's filled/hollow glyphs - a decorative codepoint
+   has twice rendered as nothing in this project's fonts (lexomancy-ui section 5), and a filled-versus-
+   hollow box is legible without colour either. */
+.previewPips {
+    flex-direction: row;
+    align-items: center;
+}
+
+.previewPip {
+    width: 7px;
+    height: 7px;
+    margin-right: 3px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(255, 52, 240, 0.45);
+    border-right-color: rgba(255, 52, 240, 0.45);
+    border-top-color: rgba(255, 52, 240, 0.45);
+    border-bottom-color: rgba(255, 52, 240, 0.45);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.previewPip--on {
+    background-color: rgb(255, 52, 240);
+}
+
+/* Focus pips are the SAME shape in the Focus channel's colour (D-0015(g): "pip chips like Broad in
+   their own colour"). Without this they inherited the base rule and both channels painted magenta,
+   which is the one thing the pip vocabulary cannot afford - colour is what carries the columns.
+   Scoped to the pip strip rather than to the chip, so the Focus PANEL's projection pips (same
+   builder, no chip around them) come out in the same colour. */
+.previewPips--focus .previewPip {
+    border-left-color: rgba(154, 220, 255, 0.45);
+    border-right-color: rgba(154, 220, 255, 0.45);
+    border-top-color: rgba(154, 220, 255, 0.45);
+    border-bottom-color: rgba(154, 220, 255, 0.45);
+}
+
+.previewPips--focus .previewPip--on {
+    background-color: rgb(154, 220, 255);
+}
+
+/* Rarity pips, same shape, the guardian battle's yellow - see .previewChip--rarity above. */
+.previewPips--rarity .previewPip {
+    border-left-color: rgba(255, 205, 84, 0.45);
+    border-right-color: rgba(255, 205, 84, 0.45);
+    border-top-color: rgba(255, 205, 84, 0.45);
+    border-bottom-color: rgba(255, 205, 84, 0.45);
+}
+
+.previewPips--rarity .previewPip--on {
+    background-color: rgb(255, 205, 84);
+}
+
+/* ===================== code-built composer text and controls =====================
+   BattleComposerPanels' ComposerChrome builds the bottom corners with inline styles, which is fine
+   for one-off colours but left every label on the default LiberationSans (Wrysk, 2026-07-29: "we
+   should not be using Sans font anywhere"). A USS class per kind is the fix — a font URL cannot be
+   written as an inline style at all, and these are exactly the elements that also needed hover
+   states. Note the buttons/rows set their background and border colours INLINE, and an inline style
+   outranks any USS rule including a pseudo-state one, so the interactive feedback below is carried by
+   properties nothing sets inline: scale and opacity. */
+.composerLine {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+}
+
+.composerCaption {
+    -unity-font-definition: url("project://database/Assets/Fonts/IMFellEnglishSC-Regular.ttf?fileID=12800000&guid=3d4c3b3da8c83a041bfc3fc968ae4354&type=3#IMFellEnglishSC-Regular");
+}
+
+.composerActionButton {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    transition-property: scale, opacity;
+    transition-duration: 0.12s, 0.12s;
+}
+
+.composerActionButton:hover {
+    scale: 1.04 1.04;
+}
+
+.composerActionButton:active {
+    scale: 0.95 0.95;
+    opacity: 0.85;
+}
+
+/* A Button is itself a TextElement, so it carries a font even when all its text lives in child
+   labels — the three focus rows were the only elements left resolving to no font definition after the
+   pass, and an ability name added to the row itself later must not silently arrive in Sans. */
+.composerFocusRow {
+    -unity-font-definition: url("project://database/Assets/Fonts/Alegreya-Medium.ttf?fileID=12800000&guid=5a45c4be02efb4ce4b60775a2453e362&type=3#Alegreya-Medium");
+    transition-property: scale, opacity;
+    transition-duration: 0.12s, 0.12s;
+}
+
+.composerFocusRow:hover {
+    opacity: 0.88;
+}
+
+.composerFocusRow:active {
+    scale: 0.99 0.99;
+}
+
+/* Projection: a hovered candidate row lights the ability it would empower (D-0014). Carried by
+   properties nothing sets INLINE - the rows write their background and border colours inline, and an
+   inline style outranks every USS rule including a pseudo-state one, which is why this is a scale and an
+   opacity rather than a border colour. The multiplier label beside it is the number. */
+.composerFocusRow--projected {
+    scale: 1.02 1.02;
+    opacity: 1;
+}
+
+/* Temporarily ineligible: on cooldown at the note it would fire on, or an ally that already holds a
+   commission. DIMMED, never removed (D-0015 §6) - and never disabled, because SetEnabled(false)
+   stops UI Toolkit dispatching pointer events at all and the row has to stay hoverable and
+   inspectable. The pick is refused in BattleFocusTargetPanel.Row instead. */
+.composerFocusRow--ineligible {
+    opacity: 0.42;
+}
+
+.composerFocusRow--ineligible:hover {
+    opacity: 0.42;
+}
+
+.composerFocusRow__projection {
+    -unity-font-definition: url("project://database/Assets/Fonts/Orbitron-VariableFont_wght.ttf?fileID=12800000&guid=7ff27cde22d26104ca13bb5642e6bebd&type=3#Orbitron-VariableFont_wght");
+    white-space: nowrap;
+}

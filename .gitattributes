@@ -1,0 +1,5 @@
+# Fixtures are evidence, not source: their bytes must survive a clone unchanged,
+# because fixtures/dumps/ records byte offsets into them. Line-ending
+# normalization would silently invalidate every span in those dumps.
+fixtures/** -text
+*.wasm binary

@@ -1,0 +1,42 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="PortraitChip" src="project://database/Assets/UI/Components/PortraitChip.uxml?fileID=9197481963319205126&amp;guid=4bf9bc0d99c19974ba679757720cb1c3&amp;type=3#PortraitChip"/>
+    <ui:Template name="ResourceBar" src="project://database/Assets/UI/Components/ResourceBar.uxml?fileID=9197481963319205126&amp;guid=44cca0b1ee5faf24ca8b7998fda1a8d8&amp;type=3#ResourceBar"/>
+    <Style src="project://database/Assets/UI/Components/HudComponents.uss?fileID=7433441132597879392&amp;guid=9a6af0fb41c3869408a05ccb9e1313d1&amp;type=3#HudComponents"/>
+    <!-- Shared unit frame (design 6.6 §3): portrait beside a stack of resource bars, composed from
+         the same PortraitChip and ResourceBar every other surface uses.
+
+         Salvaged from the retired Assets/UI/BattleUI.uxml — PlayerArea (lines 7-17) and
+         EnemyInfoArea (lines 30-42) were the only enemy/ally frames ever drawn. They differ in
+         exactly one way (the enemy mirrors: row-reverse, bars spread instead of centred), so the
+         guardian/enemy variant is the enemy modifier class on the instance (see HudComponents.uss)
+         rather than a second template. BattleUI.uxml's enemy telegraph block is NOT folded in: it is
+         guardian-specific content, not part of a unit frame, and design 6.6 Q6 has not settled
+         its shape yet.
+
+         Per-instance configuration: portrait art via a portrait modifier class on the Portrait
+         instance; bar identity via a .hpBar/.manaBar class on each ResourceBar instance. Bars are
+         found from C# as Q<VisualElement>("HealthBar").Q<ProgressBar>("Bar").
+
+         THE UNIT'S NAME LIVES IN THE STATS COLUMN, ABOVE THE BARS (Wrysk, 2026-07-29), not under
+         the portrait. The portrait chip's own floating label is therefore hidden for every unit
+         frame (see the unitFrame rule for it in HudComponents.uss) and the name is the UnitName
+         Label below, which is what BattleUnitFrameBinder writes. Two reasons it had to be a
+         template change rather than a stylesheet override: UXML has no slots, so a battle-side
+         sheet cannot move the chip's label into a sibling column, and the chip's label is
+         absolutely positioned over the button's corner, which is unreadable once a portrait
+         stretches the whole height of the frame.
+
+         NO CONSUMER YET — the world HUD has no unit frame (design 6.3 §4 moved HP off the HUD onto
+         battle-arena units). Built now because 6.6 §5 work package 3 composes it and because this
+         is where the BattleUI salvage has to land before that file is cleaned up. -->
+    <ui:Instance template="PortraitChip" name="Portrait" class="portraitChip unitFrame__portrait"/>
+    <ui:VisualElement name="Stats" class="unitFrame__stats">
+        <ui:Label text="Unit" name="UnitName" picking-mode="Ignore" class="unitFrame__name"/>
+        <ui:Instance template="ResourceBar" name="HealthBar" class="hpBar">
+            <AttributeOverrides element-name="Bar" title="Health"/>
+        </ui:Instance>
+        <ui:Instance template="ResourceBar" name="ManaBar" class="manaBar">
+            <AttributeOverrides element-name="Bar" title="Mana"/>
+        </ui:Instance>
+    </ui:VisualElement>
+</ui:UXML>

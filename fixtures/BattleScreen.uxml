@@ -1,0 +1,70 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="MenuCluster" src="project://database/Assets/UI/Components/MenuCluster.uxml?fileID=9197481963319205126&amp;guid=0f4d9a17490bc2d448a908ee1940f271&amp;type=3#MenuCluster"/>
+    <ui:Template name="PortraitChip" src="project://database/Assets/UI/Components/PortraitChip.uxml?fileID=9197481963319205126&amp;guid=4bf9bc0d99c19974ba679757720cb1c3&amp;type=3#PortraitChip"/>
+    <ui:Template name="ResourceBar" src="project://database/Assets/UI/Components/ResourceBar.uxml?fileID=9197481963319205126&amp;guid=44cca0b1ee5faf24ca8b7998fda1a8d8&amp;type=3#ResourceBar"/>
+    <ui:Template name="UnitFrame" src="project://database/Assets/UI/Components/UnitFrame.uxml?fileID=9197481963319205126&amp;guid=a40b3c5189ab7cd4a959dc9f655dc17d&amp;type=3#UnitFrame"/>
+    <Style src="project://database/Assets/UI/Components/HudComponents.uss?fileID=7433441132597879392&amp;guid=9a6af0fb41c3869408a05ccb9e1313d1&amp;type=3#HudComponents"/>
+    <Style src="project://database/Assets/UI/BattleScreen.uss?fileID=7433441132597879392&amp;guid=fcc16b6dffb040f41b440752f71035e1&amp;type=3#BattleScreen"/>
+    <ui:VisualElement name="BattlePage" picking-mode="Ignore" class="battlePage">
+        <ui:VisualElement name="TopRegion" picking-mode="Ignore" class="topRegion">
+            <ui:VisualElement name="PlayerColumn" picking-mode="Ignore" class="playerColumn">
+                <ui:VisualElement name="PlayerFrame" class="playerFrame">
+                    <ui:Instance template="PortraitChip" name="PlayerPortrait" class="portraitChip portrait--lexomancer playerFrame__portrait">
+                        <AttributeOverrides element-name="PortraitLabel" text="Party "/>
+                    </ui:Instance>
+                    <ui:VisualElement name="PlayerMenuAndStats" picking-mode="Ignore" class="playerFrame__body">
+                        <ui:Instance template="MenuCluster" name="BattleMenuCluster" class="menuCluster battleMenuCluster"/>
+                        <ui:VisualElement name="PlayerStatBars" picking-mode="Ignore" class="playerFrame__bars">
+                            <ui:Instance template="ResourceBar" name="HealthBar" class="hpBar">
+                                <AttributeOverrides element-name="Bar" title="Health"/>
+                            </ui:Instance>
+                            <ui:Instance template="ResourceBar" name="ManaBar" class="manaBar">
+                                <AttributeOverrides element-name="Bar" title="Mana"/>
+                            </ui:Instance>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="PartyFrames" picking-mode="Ignore" class="partyFrames">
+                    <ui:Instance template="UnitFrame" name="PartySlot0" class="unitFrame partyFrame"/>
+                    <ui:Instance template="UnitFrame" name="PartySlot1" class="unitFrame partyFrame"/>
+                    <ui:Instance template="UnitFrame" name="PartySlot2" class="unitFrame partyFrame"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="TopCenterColumn" picking-mode="Ignore" class="topRegion__center">
+                <ui:VisualElement name="BattleStatusBar" picking-mode="Ignore" class="statusBarRow">
+                    <ui:VisualElement name="ResonanceArea" picking-mode="Ignore" class="battleResonanceArea" style="flex-direction: row;">
+                        <ui:Label text="Lexical Resonance" class="battleResonanceLabel"/>
+                        <ui:ProgressBar title="Resonance" name="ResonanceBar" value="0" class="statpointBar energyBar battleResonanceBar" style="flex-grow: 1; justify-content: center;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="RoomsCleared" picking-mode="Ignore" class="statusBarCell">
+                        <ui:Label text="Rooms Cleared:" class="statusBarText"/>
+                        <ui:Label text="0" name="Value" class="statusBarText statusBarTextValue"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Gold" picking-mode="Ignore" class="statusBarCell">
+                        <ui:Label text="Gold:" class="statusBarText"/>
+                        <ui:Label text="0" name="Value" class="statusBarText statusBarTextValue"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="TimelineSlot" picking-mode="Ignore" class="region timelineRow">
+                    <ui:Label text="Timeline" name="TimelineHeader" class="timeline__header"/>
+                    <ui:VisualElement name="TimelineBody" picking-mode="Ignore" class="timeline__body"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="PreviewArea" picking-mode="Ignore" class="region previewRow">
+                    <ui:Label text="PreviewArea  |  score preview + candidate word chips (work package 5)" class="region__label"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="GuardianFrameSlot" picking-mode="Ignore" class="topRegion__right battleGuardianSlot">
+                <ui:Instance template="UnitFrame" name="GuardianFrame" class="unitFrame unitFrame--enemy battleGuardianFrame"/>
+                <ui:VisualElement name="TelegraphCue" picking-mode="Position" class="telegraphCue">
+                    <ui:Label text="—" name="TelegraphAbility" class="telegraphCue__ability"/>
+                    <ui:Label text="—" name="TelegraphTiming" class="telegraphCue__timing"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="EnemyFrames" picking-mode="Ignore" class="enemyFrames"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="CenterStage" picking-mode="Ignore" class="centerStage"/>
+        <ui:VisualElement name="BottomComposer" picking-mode="Ignore" class="region composerRow">
+            <ui:Label text="BottomComposer  |  the Line, utility casts, hand (waits for the unified hand/tile pass)" class="region__label"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
